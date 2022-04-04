@@ -1,0 +1,294 @@
+Welcome to the Grocery Express Delivery Service!
+> // create multiple stores
+command // create multiple stores NOT acknowledged
+> make_store,aldi,20000
+store: aldi, revenue: 20000
+> make_store,fresh_market,57000
+store: fresh_market, revenue: 57000
+> make_store,publix,61000
+store: publix, revenue: 61000
+> make_store,sprouts,33000
+store: sprouts, revenue: 33000
+> make_store,trader_joes,38000
+store: trader_joes, revenue: 38000
+> display_stores
+no parameters needed
+> // create multiple items to be sold by stores
+command // create multiple items to be sold by stores NOT acknowledged
+> sell_item,sprouts,asparagus,3
+store: sprouts, item: asparagus, weight: 3
+> sell_item,sprouts,blueberries,2
+store: sprouts, item: blueberries, weight: 2
+> display_items,sprouts
+store: sprouts
+> sell_item,publix,asparagus,2
+store: publix, item: asparagus, weight: 2
+> sell_item,publix,cashews,2
+store: publix, item: cashews, weight: 2
+> sell_item,publix,chocolate,3
+store: publix, item: chocolate, weight: 3
+> sell_item,publix,prawns,5
+store: publix, item: prawns, weight: 5
+> display_items,publix
+store: publix
+> sell_item,trader_joes,cashews,3
+store: trader_joes, item: cashews, weight: 3
+> sell_item,trader_joes,eggs,2
+store: trader_joes, item: eggs, weight: 2
+> sell_item,trader_joes,halibut,4
+store: trader_joes, item: halibut, weight: 4
+> sell_item,trader_joes,noodles,1
+store: trader_joes, item: noodles, weight: 1
+> sell_item,trader_joes,oysters,3
+store: trader_joes, item: oysters, weight: 3
+> display_items,trader_joes
+store: trader_joes
+> sell_item,fresh_market,bacon,3
+store: fresh_market, item: bacon, weight: 3
+> sell_item,fresh_market,lamb,6
+store: fresh_market, item: lamb, weight: 6
+> sell_item,fresh_market,mushrooms,3
+store: fresh_market, item: mushrooms, weight: 3
+> sell_item,fresh_market,salmon,4
+store: fresh_market, item: salmon, weight: 4
+> sell_item,fresh_market,sushi,3
+store: fresh_market, item: sushi, weight: 3
+> display_items,fresh_market
+store: fresh_market
+> display_items,aldi
+store: aldi
+> // create multiple pilots to control the drones
+command // create multiple pilots to control the drones NOT acknowledged
+> make_pilot,alan2,Alan,Alexander,111-111-1111,111-11-1111,lic_2,4
+account: alan2, first_name: Alan, last_name: Alexander, phone: 111-111-1111, tax: 111-11-1111, license: lic_2, experience: 4
+> make_pilot,fiona8,Fiona,Fitzpatrick,444-444-4444,444-44-4444,lic_8,2
+account: fiona8, first_name: Fiona, last_name: Fitzpatrick, phone: 444-444-4444, tax: 444-44-4444, license: lic_8, experience: 2
+> make_pilot,gina3,Gina,Garcia,222-222-2222,222-22-2222,lic_3,6
+account: gina3, first_name: Gina, last_name: Garcia, phone: 222-222-2222, tax: 222-22-2222, license: lic_3, experience: 6
+> make_pilot,peter5,Peter,Parsons,333-333-3333,333-33-3333,lic_5,3
+account: peter5, first_name: Peter, last_name: Parsons, phone: 333-333-3333, tax: 333-33-3333, license: lic_5, experience: 3
+> make_pilot,connor13,Connor,Cross,555-555-5555,555-55-5555,lic_13,5
+account: connor13, first_name: Connor, last_name: Cross, phone: 555-555-5555, tax: 555-55-5555, license: lic_13, experience: 5
+> display_pilots
+no parameters needed
+> // create multiple drones to deliver the orders
+command // create multiple drones to deliver the orders NOT acknowledged
+> make_drone,fresh_market,1,50,2
+store: fresh_market, drone: 1, capacity: 50, fuel: 2
+> make_drone,fresh_market,2,75,3
+store: fresh_market, drone: 2, capacity: 75, fuel: 3
+> display_drones,fresh_market
+store: fresh_market
+> make_drone,sprouts,3,40,2
+store: sprouts, drone: 3, capacity: 40, fuel: 2
+> display_drones,sprouts
+store: sprouts
+> make_drone,trader_joes,1,100,3
+store: trader_joes, drone: 1, capacity: 100, fuel: 3
+> display_drones,trader_joes
+store: trader_joes
+> display_drones,aldi
+store: aldi
+> display_drones,publix
+store: publix
+> // create multiple customers to purchase items
+command // create multiple customers to purchase items NOT acknowledged
+> make_customer,carli2,Chanel,Cortez,666-666-6666,4,100
+account: carli2, first_name: Chanel, last_name: Cortez, phone: 666-666-6666, rating: 4, credit: 100
+> make_customer,carlos5,Carlos,Chavez,888-888-8888,5,600
+account: carlos5, first_name: Carlos, last_name: Chavez, phone: 888-888-8888, rating: 5, credit: 600
+> make_customer,henry3,Henry,Horton,777-777-7777,2,200
+account: henry3, first_name: Henry, last_name: Horton, phone: 777-777-7777, rating: 2, credit: 200
+> make_customer,olivia7,Olivia,Olson,999-999-9999,4,300
+account: olivia7, first_name: Olivia, last_name: Olson, phone: 999-999-9999, rating: 4, credit: 300
+> make_customer,samuel11,Samuel,Schaefer,000-000-0000,1,400
+account: samuel11, first_name: Samuel, last_name: Schaefer, phone: 000-000-0000, rating: 1, credit: 400
+> display_customers
+no parameters needed
+> // assign pilots to fly the drones
+command // assign pilots to fly the drones NOT acknowledged
+> fly_drone,fresh_market,1,alan2
+store: fresh_market, drone: 1, pilot: alan2
+> fly_drone,fresh_market,2,gina3
+store: fresh_market, drone: 2, pilot: gina3
+> display_drones,fresh_market
+store: fresh_market
+> fly_drone,sprouts,3,peter5
+store: sprouts, drone: 3, pilot: peter5
+> display_drones,sprouts
+store: sprouts
+> fly_drone,trader_joes,1,fiona8
+store: trader_joes, drone: 1, pilot: fiona8
+> display_drones,trader_joes
+store: trader_joes
+> display_drones,aldi
+store: aldi
+> display_drones,publix
+store: publix
+> // create multiple orders as requested by customers
+command // create multiple orders as requested by customers NOT acknowledged
+> start_order,fresh_market,ordA,1,carli2
+store: fresh_market, order: ordA, drone: 1, customer: carli2
+> start_order,fresh_market,ordB,1,carli2
+store: fresh_market, order: ordB, drone: 1, customer: carli2
+> start_order,fresh_market,ordC,2,olivia7
+store: fresh_market, order: ordC, drone: 2, customer: olivia7
+> start_order,fresh_market,ordD,2,henry3
+store: fresh_market, order: ordD, drone: 2, customer: henry3
+> display_orders,fresh_market
+store: fresh_market
+> start_order,trader_joes,ordE,1,henry3
+store: trader_joes, order: ordE, drone: 1, customer: henry3
+> display_orders,trader_joes
+store: trader_joes
+> start_order,sprouts,ordF,3,henry3
+store: sprouts, order: ordF, drone: 3, customer: henry3
+> display_orders,sprouts
+store: sprouts
+> // add multiple items to the orders
+command // add multiple items to the orders NOT acknowledged
+> request_item,fresh_market,ordA,bacon,3,5
+store: fresh_market, order: ordA, item: bacon, quantity: 3, unit_price: 5
+> request_item,fresh_market,ordA,lamb,1,10
+store: fresh_market, order: ordA, item: lamb, quantity: 1, unit_price: 10
+> request_item,fresh_market,ordB,lamb,2,8
+store: fresh_market, order: ordB, item: lamb, quantity: 2, unit_price: 8
+> request_item,fresh_market,ordB,mushrooms,1,4
+store: fresh_market, order: ordB, item: mushrooms, quantity: 1, unit_price: 4
+> request_item,fresh_market,ordB,salmon,2,11
+store: fresh_market, order: ordB, item: salmon, quantity: 2, unit_price: 11
+> request_item,fresh_market,ordC,lamb,1,8
+store: fresh_market, order: ordC, item: lamb, quantity: 1, unit_price: 8
+> request_item,fresh_market,ordC,mushrooms,3,3
+store: fresh_market, order: ordC, item: mushrooms, quantity: 3, unit_price: 3
+> request_item,fresh_market,ordC,salmon,1,11
+store: fresh_market, order: ordC, item: salmon, quantity: 1, unit_price: 11
+> request_item,fresh_market,ordC,sushi,1,20
+store: fresh_market, order: ordC, item: sushi, quantity: 1, unit_price: 20
+> request_item,fresh_market,ordD,salmon,3,10
+store: fresh_market, order: ordD, item: salmon, quantity: 3, unit_price: 10
+> request_item,fresh_market,ordD,sushi,2,17
+store: fresh_market, order: ordD, item: sushi, quantity: 2, unit_price: 17
+> display_orders,fresh_market
+store: fresh_market
+> request_item,trader_joes,ordE,cashews,4,6
+store: trader_joes, order: ordE, item: cashews, quantity: 4, unit_price: 6
+> display_orders,trader_joes
+store: trader_joes
+> display_orders,sprouts
+store: sprouts
+> // display the state for the Fresh Market store
+command // display the state for the Fresh Market store NOT acknowledged
+> display_stores
+no parameters needed
+> display_customers
+no parameters needed
+> display_orders,fresh_market
+store: fresh_market
+> display_drones,fresh_market
+store: fresh_market
+> display_pilots
+no parameters needed
+> // deliver an order from Fresh Market and display the updated state
+command // deliver an order from Fresh Market and display the updated state NOT acknowledged
+> purchase_order,fresh_market,ordA
+store: fresh_market, order: ordA
+> display_stores
+no parameters needed
+> display_customers
+no parameters needed
+> display_orders,fresh_market
+store: fresh_market
+> display_drones,fresh_market
+store: fresh_market
+> display_pilots
+no parameters needed
+> // assign a new pilot for a Fresh Market drone
+command // assign a new pilot for a Fresh Market drone NOT acknowledged
+> fly_drone,fresh_market,1,connor13
+store: fresh_market, drone: 1, pilot: connor13
+> // deliver an order from Fresh Market and display the updated state
+command // deliver an order from Fresh Market and display the updated state NOT acknowledged
+> purchase_order,fresh_market,ordB
+store: fresh_market, order: ordB
+> display_stores
+no parameters needed
+> display_customers
+no parameters needed
+> display_orders,fresh_market
+store: fresh_market
+> display_drones,fresh_market
+store: fresh_market
+> display_pilots
+no parameters needed
+> // cancel an order from Fresh Market and display the updated state
+command // cancel an order from Fresh Market and display the updated state NOT acknowledged
+> cancel_order,fresh_market,ordC
+store: fresh_market, order: ordC
+> display_stores
+no parameters needed
+> display_customers
+no parameters needed
+> display_orders,fresh_market
+store: fresh_market
+> display_drones,fresh_market
+store: fresh_market
+> display_pilots
+no parameters needed
+> // deliver an order from Fresh Market and display the updated state
+command // deliver an order from Fresh Market and display the updated state NOT acknowledged
+> purchase_order,fresh_market,ordD
+store: fresh_market, order: ordD
+> display_stores
+no parameters needed
+> display_customers
+no parameters needed
+> display_orders,fresh_market
+store: fresh_market
+> display_drones,fresh_market
+store: fresh_market
+> display_pilots
+no parameters needed
+> // display the state for the Trader Joes store
+command // display the state for the Trader Joes store NOT acknowledged
+> display_orders,trader_joes
+store: trader_joes
+> display_drones,trader_joes
+store: trader_joes
+> // deliver an order from Trader Joes and display the updated state
+command // deliver an order from Trader Joes and display the updated state NOT acknowledged
+> purchase_order,trader_joes,ordE
+store: trader_joes, order: ordE
+> display_stores
+no parameters needed
+> display_customers
+no parameters needed
+> display_orders,trader_joes
+store: trader_joes
+> display_drones,trader_joes
+store: trader_joes
+> display_pilots
+no parameters needed
+> // display the state for the Sprouts store
+command // display the state for the Sprouts store NOT acknowledged
+> display_orders,sprouts
+store: sprouts
+> display_drones,sprouts
+store: sprouts
+> // deliver an order from Sprouts and display the updated state
+command // deliver an order from Sprouts and display the updated state NOT acknowledged
+> purchase_order,sprouts,ordF
+store: sprouts, order: ordF
+> display_stores
+no parameters needed
+> display_customers
+no parameters needed
+> display_orders,sprouts
+store: sprouts
+> display_drones,sprouts
+store: sprouts
+> display_pilots
+no parameters needed
+> stop
+stop acknowledged
+simulation terminated

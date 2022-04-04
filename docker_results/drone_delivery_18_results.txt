@@ -1,0 +1,32 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store
+command // create a store NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // create a drone that will be used to deliver orders
+command // create a drone that will be used to deliver orders NOT acknowledged
+> make_drone,kroger,1,40,3
+store: kroger, drone: 1, capacity: 40, fuel: 3
+> display_drones,kroger
+store: kroger
+> // create a customer
+command // create a customer NOT acknowledged
+> make_customer,aapple2,Alana,Apple,222-222-2222,4,100
+account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+> display_customers
+no parameters needed
+> // create a valid order
+command // create a valid order NOT acknowledged
+> start_order,kroger,purchaseA,1,aapple2
+store: kroger, order: purchaseA, drone: 1, customer: aapple2
+> display_orders,kroger
+store: kroger
+> // ERROR - attempt to display the orders for a non-existent store
+command // ERROR - attempt to display the orders for a non-existent store NOT acknowledged
+> display_orders,wegmans
+store: wegmans
+> stop
+stop acknowledged
+simulation terminated

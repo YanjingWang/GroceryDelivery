@@ -1,0 +1,82 @@
+Welcome to the Grocery Express Delivery Service!
+> // create stores
+command // create stores NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // create items to be sold by stores
+command // create items to be sold by stores NOT acknowledged
+> sell_item,kroger,pot_roast,5
+store: kroger, item: pot_roast, weight: 5
+> sell_item,kroger,cheesecake,4
+store: kroger, item: cheesecake, weight: 4
+> display_items,kroger
+store: kroger
+> // create pilots to fly the drones
+command // create pilots to fly the drones NOT acknowledged
+> make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33
+account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+> display_pilots
+no parameters needed
+> // create drones to deliver the groceries
+command // create drones to deliver the groceries NOT acknowledged
+> make_drone,kroger,1,40,3
+store: kroger, drone: 1, capacity: 40, fuel: 3
+> display_drones,kroger
+store: kroger
+> // assign a pilot to fly a specific drone
+command // assign a pilot to fly a specific drone NOT acknowledged
+> fly_drone,kroger,1,ffig8
+store: kroger, drone: 1, pilot: ffig8
+> display_drones,kroger
+store: kroger
+> // create customers to purchase items
+command // create customers to purchase items NOT acknowledged
+> make_customer,aapple2,Alana,Apple,222-222-2222,4,100
+account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+> display_customers
+no parameters needed
+> // create orders which will contain collections of items
+command // create orders which will contain collections of items NOT acknowledged
+> start_order,kroger,purchaseA,1,aapple2
+store: kroger, order: purchaseA, drone: 1, customer: aapple2
+> start_order,kroger,purchaseB,1,aapple2
+store: kroger, order: purchaseB, drone: 1, customer: aapple2
+> display_orders,kroger
+store: kroger
+> // add items to the orders
+command // add items to the orders NOT acknowledged
+> request_item,kroger,purchaseA,pot_roast,3,9
+store: kroger, order: purchaseA, item: pot_roast, quantity: 3, unit_price: 9
+> request_item,kroger,purchaseB,pot_roast,4,4
+store: kroger, order: purchaseB, item: pot_roast, quantity: 4, unit_price: 4
+> display_orders,kroger
+store: kroger
+> // deliver an order to the customer and display the updated state
+command // deliver an order to the customer and display the updated state NOT acknowledged
+> purchase_order,kroger,purchaseA
+store: kroger, order: purchaseA
+> display_customers
+no parameters needed
+> display_stores
+no parameters needed
+> display_orders,kroger
+store: kroger
+> display_pilots
+no parameters needed
+> // cancel an order per the customers request and display the updated state
+command // cancel an order per the customers request and display the updated state NOT acknowledged
+> cancel_order,kroger,purchaseB
+store: kroger, order: purchaseB
+> display_customers
+no parameters needed
+> display_stores
+no parameters needed
+> display_orders,kroger
+store: kroger
+> display_pilots
+no parameters needed
+> stop
+stop acknowledged
+simulation terminated

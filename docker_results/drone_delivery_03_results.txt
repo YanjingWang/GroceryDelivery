@@ -1,0 +1,14 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a drone
+command // create a drone NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> make_drone,kroger,1,40,3
+store: kroger, drone: 1, capacity: 40, fuel: 3
+> display_drones,kroger
+store: kroger
+> stop
+stop acknowledged
+simulation terminated

@@ -1,0 +1,236 @@
+Welcome to the Grocery Express Delivery Service!
+> // create multiple stores
+command // create multiple stores NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> make_store,kroger,37000
+store: kroger, revenue: 37000
+> make_store,publix,33000
+store: publix, revenue: 33000
+> display_stores
+no parameters needed
+> // create multiple items to be sold by stores
+command // create multiple items to be sold by stores NOT acknowledged
+> sell_item,kroger,pot_roast,5
+store: kroger, item: pot_roast, weight: 5
+> sell_item,kroger,cheesecake,4
+store: kroger, item: cheesecake, weight: 4
+> sell_item,publix,cheesecake,8
+store: publix, item: cheesecake, weight: 8
+> sell_item,whole_foods,antipasto,10
+store: whole_foods, item: antipasto, weight: 10
+> sell_item,kroger,cheesecake,3
+store: kroger, item: cheesecake, weight: 3
+> display_items,kroger
+store: kroger
+> display_items,publix
+store: publix
+> display_items,whole_foods
+store: whole_foods
+> // create multiple pilots to control the drones
+command // create multiple pilots to control the drones NOT acknowledged
+> make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33
+account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+> make_pilot,ggrape17,Gillian,Grape,999-999-9999,234-56-7890,twa_21,31
+account: ggrape17, first_name: Gillian, last_name: Grape, phone: 999-999-9999, tax: 234-56-7890, license: twa_21, experience: 31
+> make_pilot,ffig8,Frances,Faro,777-777-7777,678-90-1234,eastern_6,36
+account: ffig8, first_name: Frances, last_name: Faro, phone: 777-777-7777, tax: 678-90-1234, license: eastern_6, experience: 36
+> make_pilot,kkiwi23,Kiara,Kiwi,555-555-5555,890-12-3456,panam_10,28
+account: kkiwi23, first_name: Kiara, last_name: Kiwi, phone: 555-555-5555, tax: 890-12-3456, license: panam_10, experience: 28
+> display_pilots
+no parameters needed
+> // create multiple drones to deliver the orders
+command // create multiple drones to deliver the orders NOT acknowledged
+> make_drone,kroger,1,40,1
+store: kroger, drone: 1, capacity: 40, fuel: 1
+> make_drone,whole_foods,1,40,3
+store: whole_foods, drone: 1, capacity: 40, fuel: 3
+> make_drone,kroger,1,100,1
+store: kroger, drone: 1, capacity: 100, fuel: 1
+> make_drone,publix,1,40,3
+store: publix, drone: 1, capacity: 40, fuel: 3
+> make_drone,kroger,2,20,3
+store: kroger, drone: 2, capacity: 20, fuel: 3
+> display_drones,kroger
+store: kroger
+> display_drones,publix
+store: publix
+> display_drones,whole_foods
+store: whole_foods
+> // assign pilots to fly the drones
+command // assign pilots to fly the drones NOT acknowledged
+> fly_drone,kroger,1,ffig8
+store: kroger, drone: 1, pilot: ffig8
+> fly_drone,whole_foods,1,ggrape17
+store: whole_foods, drone: 1, pilot: ggrape17
+> fly_drone,publix,2,ggrape17
+store: publix, drone: 2, pilot: ggrape17
+> fly_drone,publix,1,hhoneydew20
+store: publix, drone: 1, pilot: hhoneydew20
+> fly_drone,publix,1,ggrape17
+store: publix, drone: 1, pilot: ggrape17
+> display_drones,kroger
+store: kroger
+> display_drones,publix
+store: publix
+> display_drones,whole_foods
+store: whole_foods
+> // create multiple customers to purchase items
+command // create multiple customers to purchase items NOT acknowledged
+> make_customer,aapple2,Alana,Apple,222-222-2222,4,100
+account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+> make_customer,aapple2,Ariana,Asparagus,333-333-3333,5,150
+account: aapple2, first_name: Ariana, last_name: Asparagus, phone: 333-333-3333, rating: 5, credit: 150
+> make_customer,ccherry4,Carlos,Cherry,444-444-4444,5,300
+account: ccherry4, first_name: Carlos, last_name: Cherry, phone: 444-444-4444, rating: 5, credit: 300
+> display_customers
+no parameters needed
+> // create multiple orders as requested by customers
+command // create multiple orders as requested by customers NOT acknowledged
+> start_order,kroger,purchaseA,1,aapple2
+store: kroger, order: purchaseA, drone: 1, customer: aapple2
+> start_order,kroger,purchaseB,1,aapple2
+store: kroger, order: purchaseB, drone: 1, customer: aapple2
+> start_order,whole_foods,purchaseC,1,aapple2
+store: whole_foods, order: purchaseC, drone: 1, customer: aapple2
+> start_order,kroger,purchaseA,1,aapple2
+store: kroger, order: purchaseA, drone: 1, customer: aapple2
+> start_order,kroger,purchaseC,3,aapple2
+store: kroger, order: purchaseC, drone: 3, customer: aapple2
+> start_order,kroger,purchaseC,1,bbanana3
+store: kroger, order: purchaseC, drone: 1, customer: bbanana3
+> start_order,kroger,purchaseD,2,ccherry4
+store: kroger, order: purchaseD, drone: 2, customer: ccherry4
+> start_order,publix,purchaseA,1,ccherry4
+store: publix, order: purchaseA, drone: 1, customer: ccherry4
+> display_orders,kroger
+store: kroger
+> display_orders,publix
+store: publix
+> display_orders,whole_foods
+store: whole_foods
+> // add multiple items to the orders
+command // add multiple items to the orders NOT acknowledged
+> request_item,kroger,purchaseA,pot_roast,3,10
+store: kroger, order: purchaseA, item: pot_roast, quantity: 3, unit_price: 10
+> request_item,kroger,purchaseB,pot_roast,4,5
+store: kroger, order: purchaseB, item: pot_roast, quantity: 4, unit_price: 5
+> request_item,whole_foods,purchaseA,cheesecake,1,10
+store: whole_foods, order: purchaseA, item: cheesecake, quantity: 1, unit_price: 10
+> request_item,kroger,purchaseE,cheesecake,1,10
+store: kroger, order: purchaseE, item: cheesecake, quantity: 1, unit_price: 10
+> request_item,kroger,purchaseA,truffle_risotto,1,10
+store: kroger, order: purchaseA, item: truffle_risotto, quantity: 1, unit_price: 10
+> request_item,kroger,purchaseA,pot_roast,1,10
+store: kroger, order: purchaseA, item: pot_roast, quantity: 1, unit_price: 10
+> request_item,kroger,purchaseA,cheesecake,1,90
+store: kroger, order: purchaseA, item: cheesecake, quantity: 1, unit_price: 90
+> request_item,kroger,purchaseA,cheesecake,10,5
+store: kroger, order: purchaseA, item: cheesecake, quantity: 10, unit_price: 5
+> request_item,publix,purchaseA,cheesecake,3,10
+store: publix, order: purchaseA, item: cheesecake, quantity: 3, unit_price: 10
+> request_item,kroger,purchaseD,cheesecake,1,10
+store: kroger, order: purchaseD, item: cheesecake, quantity: 1, unit_price: 10
+> // display the state of the simulation
+command // display the state of the simulation NOT acknowledged
+> display_orders,kroger
+store: kroger
+> display_orders,publix
+store: publix
+> display_customers
+no parameters needed
+> display_stores
+no parameters needed
+> display_drones,kroger
+store: kroger
+> display_drones,publix
+store: publix
+> display_pilots
+no parameters needed
+> // deliver an order and display the updated state
+command // deliver an order and display the updated state NOT acknowledged
+> purchase_order,kroger,purchaseA
+store: kroger, order: purchaseA
+> display_orders,kroger
+store: kroger
+> display_orders,publix
+store: publix
+> display_customers
+no parameters needed
+> display_stores
+no parameters needed
+> display_drones,kroger
+store: kroger
+> display_drones,publix
+store: publix
+> display_pilots
+no parameters needed
+> // deliver orders from various stores
+command // deliver orders from various stores NOT acknowledged
+> purchase_order,whole_foods,purchaseA
+store: whole_foods, order: purchaseA
+> purchase_order,kroger,purchaseF
+store: kroger, order: purchaseF
+> purchase_order,kroger,purchaseB
+store: kroger, order: purchaseB
+> purchase_order,kroger,purchaseD
+store: kroger, order: purchaseD
+> fly_drone,kroger,2,ffig8
+store: kroger, drone: 2, pilot: ffig8
+> purchase_order,kroger,purchaseD
+store: kroger, order: purchaseD
+> display_orders,kroger
+store: kroger
+> display_orders,publix
+store: publix
+> display_customers
+no parameters needed
+> display_stores
+no parameters needed
+> display_drones,kroger
+store: kroger
+> display_drones,publix
+store: publix
+> display_pilots
+no parameters needed
+> purchase_order,publix,purchaseA
+store: publix, order: purchaseA
+> display_orders,kroger
+store: kroger
+> display_orders,publix
+store: publix
+> display_customers
+no parameters needed
+> display_stores
+no parameters needed
+> display_drones,kroger
+store: kroger
+> display_drones,publix
+store: publix
+> display_pilots
+no parameters needed
+> // cancel orders per customer requests
+command // cancel orders per customer requests NOT acknowledged
+> cancel_order,whole_foods,purchaseB
+store: whole_foods, order: purchaseB
+> cancel_order,kroger,purchaseG
+store: kroger, order: purchaseG
+> cancel_order,kroger,purchaseB
+store: kroger, order: purchaseB
+> display_orders,kroger
+store: kroger
+> display_orders,publix
+store: publix
+> display_customers
+no parameters needed
+> display_stores
+no parameters needed
+> display_drones,kroger
+store: kroger
+> display_drones,publix
+store: publix
+> display_pilots
+no parameters needed
+> stop
+stop acknowledged
+simulation terminated

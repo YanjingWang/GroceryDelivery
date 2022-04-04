@@ -1,0 +1,20 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store
+command // create a store NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // create an item
+command // create an item NOT acknowledged
+> sell_item,kroger,pot_roast,5
+store: kroger, item: pot_roast, weight: 5
+> display_items,kroger
+store: kroger
+> // ERROR - attempt to display the items for a store that doesn't exist
+command // ERROR - attempt to display the items for a store that doesn't exist NOT acknowledged
+> display_items,wegmans
+store: wegmans
+> stop
+stop acknowledged
+simulation terminated

@@ -1,0 +1,20 @@
+3d2
+< command // create an item NOT acknowledged
+5c4
+< store: kroger, revenue: 33000
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> OK:display_completed
+9c9
+< store: kroger, item: pot_roast, weight: 5
+---
+> OK:change_completed
+11c11,12
+< store: kroger
+---
+> pot_roast,5
+> OK:display_completed

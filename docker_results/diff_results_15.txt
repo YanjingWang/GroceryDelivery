@@ -1,0 +1,524 @@
+3d2
+< command // create multiple stores NOT acknowledged
+5c4
+< store: kroger, revenue: 33000
+---
+> OK:change_completed
+7c6
+< store: kroger, revenue: 37000
+---
+> ERROR:store_identifier_already_exists
+9c8
+< store: publix, revenue: 33000
+---
+> OK:change_completed
+11c10,12
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> name:publix,revenue:33000
+> OK:display_completed
+13d13
+< command // create multiple items to be sold by stores NOT acknowledged
+15c15
+< store: kroger, item: pot_roast, weight: 5
+---
+> OK:change_completed
+17c17
+< store: kroger, item: cheesecake, weight: 4
+---
+> OK:change_completed
+19c19
+< store: publix, item: cheesecake, weight: 8
+---
+> OK:change_completed
+21c21
+< store: whole_foods, item: antipasto, weight: 10
+---
+> ERROR:store_identifier_does_not_exist
+23c23
+< store: kroger, item: cheesecake, weight: 3
+---
+> ERROR:item_identifier_already_exists
+25c25,27
+< store: kroger
+---
+> cheesecake,4
+> pot_roast,5
+> OK:display_completed
+27c29,30
+< store: publix
+---
+> cheesecake,8
+> OK:display_completed
+29c32
+< store: whole_foods
+---
+> ERROR:store_identifier_does_not_exist
+31d33
+< command // create multiple pilots to control the drones NOT acknowledged
+33c35
+< account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+---
+> OK:change_completed
+35c37
+< account: ggrape17, first_name: Gillian, last_name: Grape, phone: 999-999-9999, tax: 234-56-7890, license: twa_21, experience: 31
+---
+> OK:change_completed
+37c39
+< account: ffig8, first_name: Frances, last_name: Faro, phone: 777-777-7777, tax: 678-90-1234, license: eastern_6, experience: 36
+---
+> ERROR:pilot_identifier_already_exists
+39c41
+< account: kkiwi23, first_name: Kiara, last_name: Kiwi, phone: 555-555-5555, tax: 890-12-3456, license: panam_10, experience: 28
+---
+> ERROR:pilot_license_already_exists
+41c43,45
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:33
+> name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:31
+> OK:display_completed
+43d46
+< command // create multiple drones to deliver the orders NOT acknowledged
+45c48
+< store: kroger, drone: 1, capacity: 40, fuel: 1
+---
+> OK:change_completed
+47c50
+< store: whole_foods, drone: 1, capacity: 40, fuel: 3
+---
+> ERROR:store_identifier_does_not_exist
+49c52
+< store: kroger, drone: 1, capacity: 100, fuel: 1
+---
+> ERROR:drone_identifier_already_exists
+51c54
+< store: publix, drone: 1, capacity: 40, fuel: 3
+---
+> OK:change_completed
+53c56
+< store: kroger, drone: 2, capacity: 20, fuel: 3
+---
+> OK:change_completed
+55c58,60
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:1
+> droneID:2,total_cap:20,num_orders:0,remaining_cap:20,trips_left:3
+> OK:display_completed
+57c62,63
+< store: publix
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:3
+> OK:display_completed
+59c65
+< store: whole_foods
+---
+> ERROR:store_identifier_does_not_exist
+61d66
+< command // assign pilots to fly the drones NOT acknowledged
+63c68
+< store: kroger, drone: 1, pilot: ffig8
+---
+> OK:change_completed
+65c70
+< store: whole_foods, drone: 1, pilot: ggrape17
+---
+> ERROR:store_identifier_does_not_exist
+67c72
+< store: publix, drone: 2, pilot: ggrape17
+---
+> ERROR:drone_identifier_does_not_exist
+69c74
+< store: publix, drone: 1, pilot: hhoneydew20
+---
+> ERROR:pilot_identifier_does_not_exist
+71c76
+< store: publix, drone: 1, pilot: ggrape17
+---
+> OK:change_completed
+73c78,80
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:1,flown_by:Finneas_Fig
+> droneID:2,total_cap:20,num_orders:0,remaining_cap:20,trips_left:3
+> OK:display_completed
+75c82,83
+< store: publix
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:3,flown_by:Gillian_Grape
+> OK:display_completed
+77c85
+< store: whole_foods
+---
+> ERROR:store_identifier_does_not_exist
+79d86
+< command // create multiple customers to purchase items NOT acknowledged
+81c88
+< account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+---
+> OK:change_completed
+83c90
+< account: aapple2, first_name: Ariana, last_name: Asparagus, phone: 333-333-3333, rating: 5, credit: 150
+---
+> ERROR:customer_identifier_already_exists
+85c92
+< account: ccherry4, first_name: Carlos, last_name: Cherry, phone: 444-444-4444, rating: 5, credit: 300
+---
+> OK:change_completed
+87c94,96
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+> name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:300
+> OK:display_completed
+89d97
+< command // create multiple orders as requested by customers NOT acknowledged
+91c99
+< store: kroger, order: purchaseA, drone: 1, customer: aapple2
+---
+> OK:change_completed
+93c101
+< store: kroger, order: purchaseB, drone: 1, customer: aapple2
+---
+> OK:change_completed
+95c103
+< store: whole_foods, order: purchaseC, drone: 1, customer: aapple2
+---
+> ERROR:store_identifier_does_not_exist
+97c105
+< store: kroger, order: purchaseA, drone: 1, customer: aapple2
+---
+> ERROR:order_identifier_already_exists
+99c107
+< store: kroger, order: purchaseC, drone: 3, customer: aapple2
+---
+> ERROR:drone_identifier_does_not_exist
+101c109
+< store: kroger, order: purchaseC, drone: 1, customer: bbanana3
+---
+> ERROR:customer_identifier_does_not_exist
+103c111
+< store: kroger, order: purchaseD, drone: 2, customer: ccherry4
+---
+> OK:change_completed
+105c113
+< store: publix, order: purchaseA, drone: 1, customer: ccherry4
+---
+> OK:change_completed
+107c115,118
+< store: kroger
+---
+> orderID:purchaseA
+> orderID:purchaseB
+> orderID:purchaseD
+> OK:display_completed
+109c120,121
+< store: publix
+---
+> orderID:purchaseA
+> OK:display_completed
+111c123
+< store: whole_foods
+---
+> ERROR:store_identifier_does_not_exist
+113d124
+< command // add multiple items to the orders NOT acknowledged
+115c126
+< store: kroger, order: purchaseA, item: pot_roast, quantity: 3, unit_price: 10
+---
+> OK:change_completed
+117c128
+< store: kroger, order: purchaseB, item: pot_roast, quantity: 4, unit_price: 5
+---
+> OK:change_completed
+119c130
+< store: whole_foods, order: purchaseA, item: cheesecake, quantity: 1, unit_price: 10
+---
+> ERROR:store_identifier_does_not_exist
+121c132
+< store: kroger, order: purchaseE, item: cheesecake, quantity: 1, unit_price: 10
+---
+> ERROR:order_identifier_does_not_exist
+123c134
+< store: kroger, order: purchaseA, item: truffle_risotto, quantity: 1, unit_price: 10
+---
+> ERROR:item_identifier_does_not_exist
+125c136
+< store: kroger, order: purchaseA, item: pot_roast, quantity: 1, unit_price: 10
+---
+> ERROR:item_already_ordered
+127c138
+< store: kroger, order: purchaseA, item: cheesecake, quantity: 1, unit_price: 90
+---
+> ERROR:customer_cant_afford_new_item
+129c140
+< store: kroger, order: purchaseA, item: cheesecake, quantity: 10, unit_price: 5
+---
+> ERROR:drone_cant_carry_new_item
+131c142
+< store: publix, order: purchaseA, item: cheesecake, quantity: 3, unit_price: 10
+---
+> OK:change_completed
+133c144
+< store: kroger, order: purchaseD, item: cheesecake, quantity: 1, unit_price: 10
+---
+> OK:change_completed
+135d145
+< command // display the state of the simulation NOT acknowledged
+137c147,153
+< store: kroger
+---
+> orderID:purchaseA
+> item_name:pot_roast,total_quantity:3,total_cost:30,total_weight:15
+> orderID:purchaseB
+> item_name:pot_roast,total_quantity:4,total_cost:20,total_weight:20
+> orderID:purchaseD
+> item_name:cheesecake,total_quantity:1,total_cost:10,total_weight:4
+> OK:display_completed
+139c155,157
+< store: publix
+---
+> orderID:purchaseA
+> item_name:cheesecake,total_quantity:3,total_cost:30,total_weight:24
+> OK:display_completed
+141c159,161
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+> name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:300
+> OK:display_completed
+143c163,165
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> name:publix,revenue:33000
+> OK:display_completed
+145c167,169
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:2,remaining_cap:5,trips_left:1,flown_by:Finneas_Fig
+> droneID:2,total_cap:20,num_orders:1,remaining_cap:16,trips_left:3
+> OK:display_completed
+147c171,172
+< store: publix
+---
+> droneID:1,total_cap:40,num_orders:1,remaining_cap:16,trips_left:3,flown_by:Gillian_Grape
+> OK:display_completed
+149c174,176
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:33
+> name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:31
+> OK:display_completed
+151d177
+< command // deliver an order and display the updated state NOT acknowledged
+153c179
+< store: kroger, order: purchaseA
+---
+> OK:change_completed
+155c181,185
+< store: kroger
+---
+> orderID:purchaseB
+> item_name:pot_roast,total_quantity:4,total_cost:20,total_weight:20
+> orderID:purchaseD
+> item_name:cheesecake,total_quantity:1,total_cost:10,total_weight:4
+> OK:display_completed
+157c187,189
+< store: publix
+---
+> orderID:purchaseA
+> item_name:cheesecake,total_quantity:3,total_cost:30,total_weight:24
+> OK:display_completed
+159c191,193
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:70
+> name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:300
+> OK:display_completed
+161c195,197
+< no parameters needed
+---
+> name:kroger,revenue:33030
+> name:publix,revenue:33000
+> OK:display_completed
+163c199,201
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:1,remaining_cap:20,trips_left:0,flown_by:Finneas_Fig
+> droneID:2,total_cap:20,num_orders:1,remaining_cap:16,trips_left:3
+> OK:display_completed
+165c203,204
+< store: publix
+---
+> droneID:1,total_cap:40,num_orders:1,remaining_cap:16,trips_left:3,flown_by:Gillian_Grape
+> OK:display_completed
+167c206,208
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:34
+> name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:31
+> OK:display_completed
+169d209
+< command // deliver orders from various stores NOT acknowledged
+171c211
+< store: whole_foods, order: purchaseA
+---
+> ERROR:store_identifier_does_not_exist
+173c213
+< store: kroger, order: purchaseF
+---
+> ERROR:order_identifier_does_not_exist
+175c215
+< store: kroger, order: purchaseB
+---
+> ERROR:drone_needs_fuel
+177c217
+< store: kroger, order: purchaseD
+---
+> ERROR:drone_needs_pilot
+179c219
+< store: kroger, drone: 2, pilot: ffig8
+---
+> OK:change_completed
+181c221
+< store: kroger, order: purchaseD
+---
+> OK:change_completed
+183c223,225
+< store: kroger
+---
+> orderID:purchaseB
+> item_name:pot_roast,total_quantity:4,total_cost:20,total_weight:20
+> OK:display_completed
+185c227,229
+< store: publix
+---
+> orderID:purchaseA
+> item_name:cheesecake,total_quantity:3,total_cost:30,total_weight:24
+> OK:display_completed
+187c231,233
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:70
+> name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:290
+> OK:display_completed
+189c235,237
+< no parameters needed
+---
+> name:kroger,revenue:33040
+> name:publix,revenue:33000
+> OK:display_completed
+191c239,241
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:1,remaining_cap:20,trips_left:0
+> droneID:2,total_cap:20,num_orders:0,remaining_cap:20,trips_left:2,flown_by:Finneas_Fig
+> OK:display_completed
+193c243,244
+< store: publix
+---
+> droneID:1,total_cap:40,num_orders:1,remaining_cap:16,trips_left:3,flown_by:Gillian_Grape
+> OK:display_completed
+195c246,248
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:35
+> name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:31
+> OK:display_completed
+197c250
+< store: publix, order: purchaseA
+---
+> OK:change_completed
+199c252,254
+< store: kroger
+---
+> orderID:purchaseB
+> item_name:pot_roast,total_quantity:4,total_cost:20,total_weight:20
+> OK:display_completed
+201c256
+< store: publix
+---
+> OK:display_completed
+203c258,260
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:70
+> name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:260
+> OK:display_completed
+205c262,264
+< no parameters needed
+---
+> name:kroger,revenue:33040
+> name:publix,revenue:33030
+> OK:display_completed
+207c266,268
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:1,remaining_cap:20,trips_left:0
+> droneID:2,total_cap:20,num_orders:0,remaining_cap:20,trips_left:2,flown_by:Finneas_Fig
+> OK:display_completed
+209c270,271
+< store: publix
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:2,flown_by:Gillian_Grape
+> OK:display_completed
+211c273,275
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:35
+> name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:32
+> OK:display_completed
+213d276
+< command // cancel orders per customer requests NOT acknowledged
+215c278
+< store: whole_foods, order: purchaseB
+---
+> ERROR:store_identifier_does_not_exist
+217c280
+< store: kroger, order: purchaseG
+---
+> ERROR:order_identifier_does_not_exist
+219c282
+< store: kroger, order: purchaseB
+---
+> OK:change_completed
+221c284
+< store: kroger
+---
+> OK:display_completed
+223c286
+< store: publix
+---
+> OK:display_completed
+225c288,290
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:70
+> name:Carlos_Cherry,phone:444-444-4444,rating:5,credit:260
+> OK:display_completed
+227c292,294
+< no parameters needed
+---
+> name:kroger,revenue:33040
+> name:publix,revenue:33030
+> OK:display_completed
+229c296,298
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:0
+> droneID:2,total_cap:20,num_orders:0,remaining_cap:20,trips_left:2,flown_by:Finneas_Fig
+> OK:display_completed
+231c300,301
+< store: publix
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:2,flown_by:Gillian_Grape
+> OK:display_completed
+233c303,305
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:35
+> name:Gillian_Grape,phone:999-999-9999,taxID:234-56-7890,licenseID:twa_21,experience:32
+> OK:display_completed

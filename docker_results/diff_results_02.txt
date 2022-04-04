@@ -1,0 +1,11 @@
+3d2
+< command // create a pilot NOT acknowledged
+5c4
+< account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:33
+> OK:display_completed

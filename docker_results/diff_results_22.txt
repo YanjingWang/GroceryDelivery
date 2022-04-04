@@ -1,0 +1,28 @@
+3d2
+< command // create a pilot NOT acknowledged
+5c4
+< account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:33
+> OK:display_completed
+9d8
+< command // ERROR - attempt to create a pilot with a duplicate pilot ID NOT acknowledged
+11c10
+< account: ffig8, first_name: Fred, last_name: Figgy, phone: 999-999-9999, tax: 901-23-4567, license: panam_4, experience: 31
+---
+> ERROR:pilot_identifier_already_exists
+13d11
+< command // ERROR - attempt to create a pilot with a duplicate pilot ID and license ID NOT acknowledged
+15c13
+< account: ffig8, first_name: Felicia, last_name: Figueroa, phone: 111-111-1111, tax: 123-45-6789, license: panam_10, experience: 26
+---
+> ERROR:pilot_identifier_already_exists
+17c15,16
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:33
+> OK:display_completed

@@ -1,0 +1,52 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store
+command // create a store NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // create a drone that will be used to deliver orders
+command // create a drone that will be used to deliver orders NOT acknowledged
+> make_drone,kroger,1,40,3
+store: kroger, drone: 1, capacity: 40, fuel: 3
+> display_drones,kroger
+store: kroger
+> // create a customer
+command // create a customer NOT acknowledged
+> make_customer,aapple2,Alana,Apple,222-222-2222,4,100
+account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+> display_customers
+no parameters needed
+> // create a valid order
+command // create a valid order NOT acknowledged
+> start_order,kroger,purchaseA,1,aapple2
+store: kroger, order: purchaseA, drone: 1, customer: aapple2
+> display_orders,kroger
+store: kroger
+> // ERROR - attempt to create an order for a non-existent store
+command // ERROR - attempt to create an order for a non-existent store NOT acknowledged
+> start_order,wegmans,purchaseA,2,bbanana3
+store: wegmans, order: purchaseA, drone: 2, customer: bbanana3
+> // ERROR - attempt to create an order with a duplicate order ID
+command // ERROR - attempt to create an order with a duplicate order ID NOT acknowledged
+> start_order,kroger,purchaseA,2,bbanana3
+store: kroger, order: purchaseA, drone: 2, customer: bbanana3
+> // ERROR - attempt to create an order for a non-existent drone
+command // ERROR - attempt to create an order for a non-existent drone NOT acknowledged
+> start_order,kroger,purchaseB,2,bbanana3
+store: kroger, order: purchaseB, drone: 2, customer: bbanana3
+> // ERROR - attempt to create an order for a non-existent customer
+command // ERROR - attempt to create an order for a non-existent customer NOT acknowledged
+> start_order,kroger,purchaseB,1,bbanana3
+store: kroger, order: purchaseB, drone: 1, customer: bbanana3
+> display_orders,kroger
+store: kroger
+> // create a second valid order
+command // create a second valid order NOT acknowledged
+> start_order,kroger,purchaseB,1,aapple2
+store: kroger, order: purchaseB, drone: 1, customer: aapple2
+> display_orders,kroger
+store: kroger
+> stop
+stop acknowledged
+simulation terminated

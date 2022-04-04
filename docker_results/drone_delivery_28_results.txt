@@ -1,0 +1,28 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store
+command // create a store NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // create a pilot and a drone that will be flown by that pilot
+command // create a pilot and a drone that will be flown by that pilot NOT acknowledged
+> make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33
+account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+> display_pilots
+no parameters needed
+> // create a drone
+command // create a drone NOT acknowledged
+> make_drone,kroger,1,40,3
+store: kroger, drone: 1, capacity: 40, fuel: 3
+> display_drones,kroger
+store: kroger
+> // ERROR - attempt to assign pilot to a non-existent drone
+command // ERROR - attempt to assign pilot to a non-existent drone NOT acknowledged
+> fly_drone,kroger,2,ffig8
+store: kroger, drone: 2, pilot: ffig8
+> display_drones,kroger
+store: kroger
+> stop
+stop acknowledged
+simulation terminated

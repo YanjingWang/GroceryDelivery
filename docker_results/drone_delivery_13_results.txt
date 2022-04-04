@@ -1,0 +1,40 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store
+command // create a store NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // create pilots that will fly the drones
+command // create pilots that will fly the drones NOT acknowledged
+> make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33
+account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+> make_pilot,ggrape17,Grape,Geri,999-999-9999,678-90-1234,panam_5,14
+account: ggrape17, first_name: Grape, last_name: Geri, phone: 999-999-9999, tax: 678-90-1234, license: panam_5, experience: 14
+> display_pilots
+no parameters needed
+> // create drones that will be used to deliver groceries
+command // create drones that will be used to deliver groceries NOT acknowledged
+> make_drone,kroger,1,40,3
+store: kroger, drone: 1, capacity: 40, fuel: 3
+> make_drone,kroger,2,75,2
+store: kroger, drone: 2, capacity: 75, fuel: 2
+> display_drones,kroger
+store: kroger
+> // assign the pilots to fly specific drones
+command // assign the pilots to fly specific drones NOT acknowledged
+> fly_drone,kroger,1,ffig8
+store: kroger, drone: 1, pilot: ffig8
+> fly_drone,kroger,2,ggrape17
+store: kroger, drone: 2, pilot: ggrape17
+> display_drones,kroger
+store: kroger
+> // demonstrate the effect of assigning a pilot to a new drone
+command // demonstrate the effect of assigning a pilot to a new drone NOT acknowledged
+> fly_drone,kroger,2,ffig8
+store: kroger, drone: 2, pilot: ffig8
+> display_drones,kroger
+store: kroger
+> stop
+stop acknowledged
+simulation terminated

@@ -1,0 +1,11 @@
+3d2
+< command // create a customer NOT acknowledged
+5c4
+< account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+> OK:display_completed

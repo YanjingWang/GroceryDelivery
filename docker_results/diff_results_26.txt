@@ -1,0 +1,22 @@
+3d2
+< command // create a customer NOT acknowledged
+5c4
+< account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+> OK:display_completed
+9d8
+< command // ERROR - attempt to create a customer with a duplicate customer ID NOT acknowledged
+11c10
+< account: aapple2, first_name: Aaron, last_name: Apple, phone: 333-333-3333, rating: 3, credit: 35
+---
+> ERROR:customer_identifier_already_exists
+13c12,13
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+> OK:display_completed

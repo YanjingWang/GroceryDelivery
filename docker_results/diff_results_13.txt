@@ -1,0 +1,71 @@
+3d2
+< command // create a store NOT acknowledged
+5c4
+< store: kroger, revenue: 33000
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> OK:display_completed
+9d8
+< command // create pilots that will fly the drones NOT acknowledged
+11c10
+< account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+---
+> OK:change_completed
+13c12
+< account: ggrape17, first_name: Grape, last_name: Geri, phone: 999-999-9999, tax: 678-90-1234, license: panam_5, experience: 14
+---
+> OK:change_completed
+15c14,16
+< no parameters needed
+---
+> name:Finneas_Fig,phone:888-888-8888,taxID:890-12-3456,licenseID:panam_10,experience:33
+> name:Grape_Geri,phone:999-999-9999,taxID:678-90-1234,licenseID:panam_5,experience:14
+> OK:display_completed
+17d17
+< command // create drones that will be used to deliver groceries NOT acknowledged
+19c19
+< store: kroger, drone: 1, capacity: 40, fuel: 3
+---
+> OK:change_completed
+21c21
+< store: kroger, drone: 2, capacity: 75, fuel: 2
+---
+> OK:change_completed
+23c23,25
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:3
+> droneID:2,total_cap:75,num_orders:0,remaining_cap:75,trips_left:2
+> OK:display_completed
+25d26
+< command // assign the pilots to fly specific drones NOT acknowledged
+27c28
+< store: kroger, drone: 1, pilot: ffig8
+---
+> OK:change_completed
+29c30
+< store: kroger, drone: 2, pilot: ggrape17
+---
+> OK:change_completed
+31c32,34
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:3,flown_by:Finneas_Fig
+> droneID:2,total_cap:75,num_orders:0,remaining_cap:75,trips_left:2,flown_by:Grape_Geri
+> OK:display_completed
+33d35
+< command // demonstrate the effect of assigning a pilot to a new drone NOT acknowledged
+35c37
+< store: kroger, drone: 2, pilot: ffig8
+---
+> OK:change_completed
+37c39,41
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:3
+> droneID:2,total_cap:75,num_orders:0,remaining_cap:75,trips_left:2,flown_by:Finneas_Fig
+> OK:display_completed

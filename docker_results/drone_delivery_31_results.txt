@@ -1,0 +1,70 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store
+command // create a store NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // create items to be sold by the store
+command // create items to be sold by the store NOT acknowledged
+> sell_item,kroger,pot_roast,9
+store: kroger, item: pot_roast, weight: 9
+> sell_item,kroger,cheesecake,4
+store: kroger, item: cheesecake, weight: 4
+> display_items,kroger
+store: kroger
+> // create a drone to deliver the orders
+command // create a drone to deliver the orders NOT acknowledged
+> make_drone,kroger,1,40,3
+store: kroger, drone: 1, capacity: 40, fuel: 3
+> display_drones,kroger
+store: kroger
+> // create a customer to purchase items
+command // create a customer to purchase items NOT acknowledged
+> make_customer,aapple2,Alana,Apple,222-222-2222,4,100
+account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+> display_customers
+no parameters needed
+> // start the order and add an initial item
+command // start the order and add an initial item NOT acknowledged
+> start_order,kroger,purchaseA,1,aapple2
+store: kroger, order: purchaseA, drone: 1, customer: aapple2
+> request_item,kroger,purchaseA,cheesecake,2,5
+store: kroger, order: purchaseA, item: cheesecake, quantity: 2, unit_price: 5
+> display_orders,kroger
+store: kroger
+> // ERROR - attempt to add item from a non-existent store
+command // ERROR - attempt to add item from a non-existent store NOT acknowledged
+> request_item,wegmans,purchaseB,strawberry_cheesecake,10,10
+store: wegmans, order: purchaseB, item: strawberry_cheesecake, quantity: 10, unit_price: 10
+> // ERROR - attempt to add item to a non-existent order
+command // ERROR - attempt to add item to a non-existent order NOT acknowledged
+> request_item,kroger,purchaseB,strawberry_cheesecake,10,10
+store: kroger, order: purchaseB, item: strawberry_cheesecake, quantity: 10, unit_price: 10
+> // ERROR - attempt to add a non-existent item to order
+command // ERROR - attempt to add a non-existent item to order NOT acknowledged
+> request_item,kroger,purchaseA,strawberry_cheesecake,10,10
+store: kroger, order: purchaseA, item: strawberry_cheesecake, quantity: 10, unit_price: 10
+> // ERROR - attempt to add a duplicate item to order
+command // ERROR - attempt to add a duplicate item to order NOT acknowledged
+> request_item,kroger,purchaseA,cheesecake,10,10
+store: kroger, order: purchaseA, item: cheesecake, quantity: 10, unit_price: 10
+> // ERROR - customer doesn't have enough money to purchase the item
+command // ERROR - customer doesn't have enough money to purchase the item NOT acknowledged
+> request_item,kroger,purchaseA,pot_roast,10,10
+store: kroger, order: purchaseA, item: pot_roast, quantity: 10, unit_price: 10
+> // ERROR - drone doesn't have capacity to carry or lift the item
+command // ERROR - drone doesn't have capacity to carry or lift the item NOT acknowledged
+> request_item,kroger,purchaseA,pot_roast,4,10
+store: kroger, order: purchaseA, item: pot_roast, quantity: 4, unit_price: 10
+> display_orders,kroger
+store: kroger
+> // add a second item
+command // add a second item NOT acknowledged
+> request_item,kroger,purchaseA,pot_roast,2,10
+store: kroger, order: purchaseA, item: pot_roast, quantity: 2, unit_price: 10
+> display_orders,kroger
+store: kroger
+> stop
+stop acknowledged
+simulation terminated

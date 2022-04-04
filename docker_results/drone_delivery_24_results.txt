@@ -1,0 +1,22 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store
+command // create a store NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // create a drone
+command // create a drone NOT acknowledged
+> make_drone,kroger,1,40,3
+store: kroger, drone: 1, capacity: 40, fuel: 3
+> display_drones,kroger
+store: kroger
+> // ERROR - attempt to create a drone for a non-existent store
+command // ERROR - attempt to create a drone for a non-existent store NOT acknowledged
+> make_drone,wegmans,2,40,3
+store: wegmans, drone: 2, capacity: 40, fuel: 3
+> display_drones,kroger
+store: kroger
+> stop
+stop acknowledged
+simulation terminated

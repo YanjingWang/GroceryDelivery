@@ -1,0 +1,77 @@
+3d2
+< command // create a store NOT acknowledged
+5c4
+< store: kroger, revenue: 33000
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> OK:display_completed
+9c9
+< store: kroger, item: pot_roast, weight: 5
+---
+> OK:change_completed
+11c11
+< store: kroger, item: cheesecake, weight: 4
+---
+> OK:change_completed
+13c13,15
+< store: kroger
+---
+> cheesecake,4
+> pot_roast,5
+> OK:display_completed
+15c17
+< store: kroger, drone: 1, capacity: 40, fuel: 3
+---
+> OK:change_completed
+17c19,20
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:3
+> OK:display_completed
+19d21
+< command // create a customer and start multiple orders NOT acknowledged
+21c23
+< account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+---
+> OK:change_completed
+23c25,26
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+> OK:display_completed
+25c28
+< store: kroger, order: purchaseA, drone: 1, customer: aapple2
+---
+> OK:change_completed
+27c30
+< store: kroger, order: purchaseB, drone: 1, customer: aapple2
+---
+> OK:change_completed
+29c32,34
+< store: kroger
+---
+> orderID:purchaseA
+> orderID:purchaseB
+> OK:display_completed
+31d35
+< command // add an item to each of the orders NOT acknowledged
+33c37
+< store: kroger, order: purchaseA, item: pot_roast, quantity: 3, unit_price: 9
+---
+> OK:change_completed
+35c39
+< store: kroger, order: purchaseB, item: cheesecake, quantity: 4, unit_price: 4
+---
+> OK:change_completed
+37c41,45
+< store: kroger
+---
+> orderID:purchaseA
+> item_name:pot_roast,total_quantity:3,total_cost:27,total_weight:15
+> orderID:purchaseB
+> item_name:cheesecake,total_quantity:4,total_cost:16,total_weight:16
+> OK:display_completed

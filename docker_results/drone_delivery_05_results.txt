@@ -1,0 +1,14 @@
+Welcome to the Grocery Express Delivery Service!
+> // create an item
+command // create an item NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> sell_item,kroger,pot_roast,5
+store: kroger, item: pot_roast, weight: 5
+> display_items,kroger
+store: kroger
+> stop
+stop acknowledged
+simulation terminated

@@ -1,0 +1,60 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store and an item to sell
+command // create a store and an item to sell NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> sell_item,kroger,cheesecake,4
+store: kroger, item: cheesecake, weight: 4
+> display_items,kroger
+store: kroger
+> // create a pilot and a drone that will be flown by that pilot
+command // create a pilot and a drone that will be flown by that pilot NOT acknowledged
+> make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33
+account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+> display_pilots
+no parameters needed
+> make_drone,kroger,1,40,0
+store: kroger, drone: 1, capacity: 40, fuel: 0
+> display_drones,kroger
+store: kroger
+> // create a customer and an order with one item
+command // create a customer and an order with one item NOT acknowledged
+> make_customer,aapple2,Alana,Apple,222-222-2222,4,100
+account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+> display_customers
+no parameters needed
+> start_order,kroger,purchaseB,1,aapple2
+store: kroger, order: purchaseB, drone: 1, customer: aapple2
+> request_item,kroger,purchaseB,cheesecake,4,4
+store: kroger, order: purchaseB, item: cheesecake, quantity: 4, unit_price: 4
+> display_orders,kroger
+store: kroger
+> // ERROR - attempt to deliver an order from a non-existent store
+command // ERROR - attempt to deliver an order from a non-existent store NOT acknowledged
+> purchase_order,wegmans,purchaseA
+store: wegmans, order: purchaseA
+> // ERROR - attempt to deliver a non-existent order
+command // ERROR - attempt to deliver a non-existent order NOT acknowledged
+> purchase_order,kroger,purchaseA
+store: kroger, order: purchaseA
+> // ERROR - attempt to deliver an order when the drone has no pilot
+command // ERROR - attempt to deliver an order when the drone has no pilot NOT acknowledged
+> display_drones,kroger
+store: kroger
+> purchase_order,kroger,purchaseB
+store: kroger, order: purchaseB
+> // assign a pilot to the drone
+command // assign a pilot to the drone NOT acknowledged
+> fly_drone,kroger,1,ffig8
+store: kroger, drone: 1, pilot: ffig8
+> display_drones,kroger
+store: kroger
+> // ERROR - attempt to deliver an order when the drone needs fuel
+command // ERROR - attempt to deliver an order when the drone needs fuel NOT acknowledged
+> purchase_order,kroger,purchaseB
+store: kroger, order: purchaseB
+> stop
+stop acknowledged
+simulation terminated

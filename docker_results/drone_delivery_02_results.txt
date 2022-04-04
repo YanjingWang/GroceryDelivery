@@ -1,0 +1,10 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a pilot
+command // create a pilot NOT acknowledged
+> make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33
+account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+> display_pilots
+no parameters needed
+> stop
+stop acknowledged
+simulation terminated

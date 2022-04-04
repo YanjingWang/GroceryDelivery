@@ -1,0 +1,16 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a customer
+command // create a customer NOT acknowledged
+> make_customer,aapple2,Alana,Apple,222-222-2222,4,100
+account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+> display_customers
+no parameters needed
+> // ERROR - attempt to create a customer with a duplicate customer ID
+command // ERROR - attempt to create a customer with a duplicate customer ID NOT acknowledged
+> make_customer,aapple2,Aaron,Apple,333-333-3333,3,35
+account: aapple2, first_name: Aaron, last_name: Apple, phone: 333-333-3333, rating: 3, credit: 35
+> display_customers
+no parameters needed
+> stop
+stop acknowledged
+simulation terminated

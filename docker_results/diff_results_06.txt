@@ -1,0 +1,27 @@
+3d2
+< command // create multiple items NOT acknowledged
+5c4
+< store: kroger, revenue: 33000
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> OK:display_completed
+9c9
+< store: kroger, item: pot_roast, weight: 5
+---
+> OK:change_completed
+11c11
+< store: kroger, item: cheesecake, weight: 4
+---
+> OK:change_completed
+13d12
+< command // items (when displayed) will be sorted by item name NOT acknowledged
+15c14,16
+< store: kroger
+---
+> cheesecake,4
+> pot_roast,5
+> OK:display_completed

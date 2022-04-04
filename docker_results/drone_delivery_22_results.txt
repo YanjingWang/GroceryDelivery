@@ -1,0 +1,20 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a pilot
+command // create a pilot NOT acknowledged
+> make_pilot,ffig8,Finneas,Fig,888-888-8888,890-12-3456,panam_10,33
+account: ffig8, first_name: Finneas, last_name: Fig, phone: 888-888-8888, tax: 890-12-3456, license: panam_10, experience: 33
+> display_pilots
+no parameters needed
+> // ERROR - attempt to create a pilot with a duplicate pilot ID
+command // ERROR - attempt to create a pilot with a duplicate pilot ID NOT acknowledged
+> make_pilot,ffig8,Fred,Figgy,999-999-9999,901-23-4567,panam_4,31
+account: ffig8, first_name: Fred, last_name: Figgy, phone: 999-999-9999, tax: 901-23-4567, license: panam_4, experience: 31
+> // ERROR - attempt to create a pilot with a duplicate pilot ID and license ID
+command // ERROR - attempt to create a pilot with a duplicate pilot ID and license ID NOT acknowledged
+> make_pilot,ffig8,Felicia,Figueroa,111-111-1111,123-45-6789,panam_10,26
+account: ffig8, first_name: Felicia, last_name: Figueroa, phone: 111-111-1111, tax: 123-45-6789, license: panam_10, experience: 26
+> display_pilots
+no parameters needed
+> stop
+stop acknowledged
+simulation terminated

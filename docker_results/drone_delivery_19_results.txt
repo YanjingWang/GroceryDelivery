@@ -1,0 +1,16 @@
+Welcome to the Grocery Express Delivery Service!
+> // create a store
+command // create a store NOT acknowledged
+> make_store,kroger,33000
+store: kroger, revenue: 33000
+> display_stores
+no parameters needed
+> // ERROR - attempt to create duplicate store name
+command // ERROR - attempt to create duplicate store name NOT acknowledged
+> make_store,kroger,29000
+store: kroger, revenue: 29000
+> display_stores
+no parameters needed
+> stop
+stop acknowledged
+simulation terminated

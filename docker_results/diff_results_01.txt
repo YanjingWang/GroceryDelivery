@@ -1,0 +1,11 @@
+3d2
+< command // create a store NOT acknowledged
+5c4
+< store: kroger, revenue: 33000
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> OK:display_completed

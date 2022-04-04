@@ -1,0 +1,75 @@
+ ------ Test Case: 0 ----
+docker: Error response from daemon: Conflict. The container name "/dronedelivery" is already in use by container "9bba3339f8d6c10edb8ebd9652c3f5b1e618845d01a1a30fe4875cfcaf9b6111". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+Error: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_00_results.txt
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_00.txt
+Error: No such container: dronedelivery
+ ------ Test Case: 1 ----
+docker: Error response from daemon: CError: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_21_results.txt
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_21.txt
+Error response from daemon: You cannot remove a running container 09aeb79b43934ffc1797c95e751e7b26f104d91379827267b23eb9b75f495177. Stop the container before attempting removal or force remove
+ ------ Test Case: 22 ----
+docker: Error response from daemon: Conflict. The coError: No such container: dronedelivery
+ ------ Test Case: 3 ----
+docker: Error response from daemon: Conflict. The container name "/dronedelivery" is already in use by container "92ee3f8bc86afd132257457bda497513518949d68a424b39bdbf9b6a6b97b621". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+Error: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_03_reError: No such container: dronedelivery
+ ------ Test Case: 24 ----
+docker: Error response from daemon: Conflict. The container name "/dronedelivery" is already in use by container "e923ccfcc84f60263c103c5ac99a2bfb1e9eeee886822bdbec24a8955fba46f5". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+Error: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_24_results.txt
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_24.txt
+Error response from daemon: You cannot remove a running container e923ccfcc84f60263c103c5ac99a2bfb1e9eeee886822bdbec24a8955fba46f5. Stop the container before attempting removal or force remove
+ ------ Test Case: 25 ----
+docker: Error response from daemon: Conflict. TheError: No such container: dronedelivery
+ ------ Test Case: 6 ----
+docker: Error response from daemon: Conflict. The container name "/dronedelivery" is already in use by container "c03c4ea47b84d23316683720d45e0db41b23f509a67654f4f15feab00d158765". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+Error: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_06_resulError: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_26.txt
+Error response from daemon: You cannot remove a running container cc23b9df861d7d75f74f066d6c009934b27a36846a1024705071cbd932437f1f. Stop the container before attempting removal or force remove
+ ------ Test Case: 27 ----
+docker: Error response from daemon: Conflict. The container name "/dronedelivery" is already in use by container "cc23b9df861d7d75f74f066d6c009934b27a36846a1024705071cbd932437f1f". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+Error: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_27_results.txt
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_27.txt
+ ------ Test Case: 28 ----
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_28.txt
+Error response from daemon: You cannot remove a running container c757880081592dc0e13d15e9d87d6486759c03b242b6e01e718811887077752b. Stop the container before attempting removal or force remove
+ ------ Test Case: 29 ----
+docker: Error response from daemon: Conflict. The container name "/dronedelivery" is already in use by container "c757880081592dc0e13d15e9d87d6486759c03b242b6e01e718811887077752b". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+Error: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_29_results.txt
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_29.txt
+ ------ Test Case: 30 ----
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_30.txt
+Error response from daemon: You cannot remove a running container 670b49df878473678a49c774eb97785a6b2b39c74ca28cf069f00420104b854b. Stop the container before attempting removal or force remove
+ ------ Test Case: 31 ----
+docker: Error response from daemon: Conflict. The container name "/dronedelivery" is already in use by container "670b49df878473678a49c774eb97785a6b2b39c74ca28cf069f00420104b854b". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+Error: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_31_results.txt
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_31.txt
+ ------ Test Case: 32 ----
+Error: No such container:path: dronedelivery:/usr/src/cs6310/drone_delivery_32_results.txt
+Error: No such container:path: dronedelivery:/usr/src/cs6310/diff_results_32.txt
+Error response from daemon: You cannot remove a running container 76ccbacdb165953233980f5e437f87ed6582e718a9cb5410c4d7b4db4cfa3665. Stop the container before attempting removal or force remove
+ ------ Test Case: 33 ----
+docker: Error response from daemon: Conflict. The container name "/dronedelivery" is already in use by container "76ccbacdb165953233980f5e437f87ed6582e718a9cb541Error: No such container: dronedelivery
+ ------ Test Case: 15 ----
+ ------ Test Case: 16 ----
+ ------ Test Case: 17 ----
+ ------ Test Case: 18 ----
+ ------ Test Case: 19 ----
+ ------ Test Case: 20 ----
+ ------ Test Case: 21 ----
+ ------ Test Case: 22 ----
+ ------ Test Case: 23 ----
+ ------ Test Case: 24 ----
+ ------ Test Case: 25 ----
+ ------ Test Case: 26 ----
+ ------ Test Case: 27 ----
+ ------ Test Case: 28 ----
+ ------ Test Case: 29 ----
+ ------ Test Case: 30 ----
+ ------ Test Case: 31 ----
+ ------ Test Case: 32 ----
+ ------ Test Case: 33 ----

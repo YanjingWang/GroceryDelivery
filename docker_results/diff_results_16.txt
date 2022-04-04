@@ -1,0 +1,28 @@
+3d2
+< command // create a store NOT acknowledged
+5c4
+< store: kroger, revenue: 33000
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> OK:display_completed
+9d8
+< command // create an item NOT acknowledged
+11c10
+< store: kroger, item: pot_roast, weight: 5
+---
+> OK:change_completed
+13c12,13
+< store: kroger
+---
+> pot_roast,5
+> OK:display_completed
+15d14
+< command // ERROR - attempt to display the items for a store that doesn't exist NOT acknowledged
+17c16
+< store: wegmans
+---
+> ERROR:store_identifier_does_not_exist

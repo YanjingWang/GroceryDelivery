@@ -1,0 +1,61 @@
+3d2
+< command // create a store NOT acknowledged
+5c4
+< store: kroger, revenue: 33000
+---
+> OK:change_completed
+7c6,7
+< no parameters needed
+---
+> name:kroger,revenue:33000
+> OK:display_completed
+9c9
+< store: kroger, item: pot_roast, weight: 5
+---
+> OK:change_completed
+11c11,12
+< store: kroger
+---
+> pot_roast,5
+> OK:display_completed
+13c14
+< store: kroger, drone: 1, capacity: 40, fuel: 3
+---
+> OK:change_completed
+15c16,17
+< store: kroger
+---
+> droneID:1,total_cap:40,num_orders:0,remaining_cap:40,trips_left:3
+> OK:display_completed
+17d18
+< command // create a customer and an order NOT acknowledged
+19c20
+< account: aapple2, first_name: Alana, last_name: Apple, phone: 222-222-2222, rating: 4, credit: 100
+---
+> OK:change_completed
+21c22,23
+< no parameters needed
+---
+> name:Alana_Apple,phone:222-222-2222,rating:4,credit:100
+> OK:display_completed
+23c25
+< store: kroger, order: purchaseA, drone: 1, customer: aapple2
+---
+> OK:change_completed
+25c27,28
+< store: kroger
+---
+> orderID:purchaseA
+> OK:display_completed
+27d29
+< command // add an item to the order NOT acknowledged
+29c31
+< store: kroger, order: purchaseA, item: pot_roast, quantity: 3, unit_price: 9
+---
+> OK:change_completed
+31c33,35
+< store: kroger
+---
+> orderID:purchaseA
+> item_name:pot_roast,total_quantity:3,total_cost:27,total_weight:15
+> OK:display_completed
