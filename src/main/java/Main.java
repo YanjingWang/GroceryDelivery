@@ -5,7 +5,7 @@ import static edu.gatech.cs6310.DBManager.showData;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to the Grocery Express Delivery Service!");
-        showData();
+//        showData();
         DeliveryService simulator = new DeliveryService();
         simulator.commandLoop();
         System.out.println("simulation terminated");
