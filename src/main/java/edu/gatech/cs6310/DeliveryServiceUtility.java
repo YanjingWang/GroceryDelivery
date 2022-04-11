@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Utility class that knows what action to take based on appropriate input
@@ -15,7 +17,7 @@ public class DeliveryServiceUtility {
     private SortedMap<String, Pilot> pilots = new TreeMap<>();
     private SortedMap<String, Customer> customers = new TreeMap<>();
     private Set<String> licenses = new HashSet<>();
-    private static Logger logger = Logger.getLogger(DeliveryServiceUtility.class);
+    private static Logger logger = LogManager.getLogger(DeliveryServiceUtility.class);
 
     /**
      * Create a new store
