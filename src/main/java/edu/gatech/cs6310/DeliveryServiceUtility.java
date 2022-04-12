@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+//import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Utility class that knows what action to take based on appropriate input
@@ -14,6 +17,7 @@ public class DeliveryServiceUtility {
     private SortedMap<String, Pilot> pilots = new TreeMap<>();
     private SortedMap<String, Customer> customers = new TreeMap<>();
     private Set<String> licenses = new HashSet<>();
+    private static Logger logger = LogManager.getLogger(DeliveryServiceUtility.class);
 
     /**
      * Create a new store
@@ -24,6 +28,7 @@ public class DeliveryServiceUtility {
     public void makeStore(String storeName, String revenue) {
         if(stores.get(storeName) != null) {
             System.out.println("ERROR: store_identifier_already_exists");
+            logger.error("ERROR: store_identifier_already_exists");
             return;
         }
         stores.put(storeName, new Store(storeName, Long.valueOf(revenue)));
@@ -36,6 +41,7 @@ public class DeliveryServiceUtility {
     public void displayStores() {
         for(Store store : stores.values()) {
             System.out.println(store);
+            logger.info(store);
         }
         printSuccessfulDisplay();
     }
@@ -51,10 +57,12 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_already_exists");
+            logger.error("ERROR: store_identifier_already_exists");
             return;
         }
         if(!store.addInventory(new Item(itemName, Long.valueOf(weight)))){
             System.out.println("ERROR: item_identifier_already_exists");
+            logger.error("ERROR: item_identifier_already_exists");
             return;
         }
         printSuccessfulChange();
@@ -69,10 +77,12 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
         for(Item item : store.getInventory().values()) {
             System.out.println(item);
+            logger.info(item);
         }
         printSuccessfulDisplay();
     }
@@ -92,10 +102,12 @@ public class DeliveryServiceUtility {
         Pilot pilot = pilots.get(accountId);
         if(pilot != null) {
             System.out.println("ERROR: pilot_identifier_already_exists");
+            logger.error("ERROR: pilot_identifier_already_exists");
             return;
         }
         if(licenses.contains(licenseId)) {
             System.out.println("ERROR: pilot_license_already_exists");
+            logger.error("ERROR: pilot_identifier_already_exists");
             return;
         }
 
@@ -110,6 +122,7 @@ public class DeliveryServiceUtility {
     public void displayPilots() {
         for(Pilot pilot: pilots.values()) {
             System.out.println(pilot);
+            logger.info(pilot);
         }
         printSuccessfulDisplay();
     }
@@ -126,10 +139,12 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
         if(!store.addDrone(new Drone(droneId, Long.valueOf(maxCapacity), Integer.valueOf(maxDeliveries)))){
             System.out.println("ERROR: drone_identifier_already_exists");
+            logger.error("ERROR: drone_identifier_already_exists");
             return;
         }
         printSuccessfulChange();
@@ -144,10 +159,12 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
         for(Drone drone : store.getDrones().values()) {
             System.out.println(drone);
+            logger.info(drone);
         }
         printSuccessfulDisplay();
     }
@@ -163,17 +180,20 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
         Drone drone = store.getDrones().get(droneId);
         if(drone == null) {
             System.out.println("ERROR: drone_identifier_does_not_exist");
+            logger.error("ERROR: drone_identifier_does_not_exist");
             return;
         }
 
         Pilot pilot = pilots.get(pilotAccountId);
         if(pilot == null) {
             System.out.println("ERROR: pilot_identifier_does_not_exist");
+            logger.error("ERROR: pilot_identifier_does_not_exist");
             return;
         }
         if(pilot.getAssignedDrone() != null) {
@@ -197,6 +217,7 @@ public class DeliveryServiceUtility {
         Customer customer = customers.get(customerId);
         if(customer != null) {
             System.out.println("ERROR: customer_identifier_already_exists");
+            logger.error("ERROR: customer_identifier_already_exists");
             return;
         }
 
@@ -210,6 +231,7 @@ public class DeliveryServiceUtility {
     public void displayCustomers() {
         for(Customer customer: customers.values()) {
             System.out.println(customer);
+            logger.info(customer);
         }
         printSuccessfulDisplay();
     }
@@ -226,20 +248,24 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
         Order newOrder = new Order(orderId, droneId, customerId);
         if(!store.addOrder(newOrder)){
             System.out.println("ERROR: order_identifier_already_exists");
+            logger.error("ERROR: order_identifier_already_exists");
             return;
         }
         if(store.getDrones().get(droneId) == null) {
             System.out.println("ERROR: drone_identifier_does_not_exist");
+            logger.error("ERROR: drone_identifier_does_not_exist");
             store.removeOrder(newOrder);
             return;
         }
         if(customers.get(customerId) == null) {
             System.out.println("ERROR: customer_identifier_does_not_exist");
+            logger.error("ERROR: customer_identifier_does_not_exist");
             return;
         }
     printSuccessfulChange();
@@ -253,6 +279,7 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
 
@@ -261,6 +288,7 @@ public class DeliveryServiceUtility {
             if(!order.getItems().isEmpty()) {
                 order.getItems().forEach( item ->  {
                     System.out.println(item);
+                    logger.info(item);
                 });
             }
         }
@@ -280,20 +308,24 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
         Order order = store.getOrders().get(orderId);
         if(order == null) {
             System.out.println("ERROR: order_identifier_does_not_exist");
+            logger.error("ERROR: order_identifier_does_not_exist");
             return;
         }
         Item item = store.getInventory().get(itemName);
         if(item == null) {
             System.out.println("ERROR: item_identifier_does_not_exist");
+            logger.error("ERROR: item_identifier_does_not_exist");
             return;
         }
         if(order.getItems().contains(item)) {
             System.out.println("ERROR: item_already_ordered");
+            logger.error("ERROR: item_already_ordered");
             return;
         }
         RequestedItem requestedItem = new RequestedItem(itemName, item.getWeight(), Integer.valueOf(quantity), Integer.valueOf(unitPrice));
@@ -308,12 +340,14 @@ public class DeliveryServiceUtility {
 
         if(!customer.canBuy(Long.valueOf(totalCostOfItemsCurrentlyInOrder + requestedItem.getTotalPrice()))) {
             System.out.println("ERROR: customer_cant_afford_new_item");
+            logger.error("ERROR: customer_cant_afford_new_item");
             return;
         }
 
         Drone drone = store.getDrones().get(order.getDroneId());
         if(!drone.canCarry(totalWeightCurrentlyInOrder + requestedItem.getTotalWeight())) {
             System.out.println("ERROR: drone_cant_carry_new_item");
+            logger.error("ERROR: drone_cant_carry_new_item");
             return;
         }
 
@@ -336,12 +370,14 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
 
         Order order = store.getOrders().get(orderId);
         if(order == null) {
             System.out.println("ERROR: order_identifier_does_not_exist");
+            logger.error("ERROR: order_identifier_does_not_exist");
             return;
         }
 
@@ -358,10 +394,12 @@ public class DeliveryServiceUtility {
 
         if (pilot == null) {
             System.out.println("ERROR:drone_needs_pilot");
+            logger.error("ERROR:drone_needs_pilot");
             return;
         }
         if(drone.tripsLeft() <= 0) {
             System.out.println("ERROR:drone_needs_fuel");
+            logger.error("ERROR:drone_needs_fuel");
             return;
         }
 
@@ -381,12 +419,14 @@ public class DeliveryServiceUtility {
         Store store = stores.get(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
 
         Order order = store.getOrders().get(orderId);
         if(order == null) {
             System.out.println("ERROR: order_identifier_does_not_exist");
+            logger.error("ERROR: order_identifier_does_not_exist");
             return;
         }
         store.removeOrder(order);
@@ -395,9 +435,11 @@ public class DeliveryServiceUtility {
 
     private void printSuccessfulDisplay() {
         System.out.println("OK: display_completed");
+        logger.info("OK: display_completed");
     }
 
     private void printSuccessfulChange() {
         System.out.println("OK: change_completed");
+        logger.info("OK: change_completed");
     }
 }
