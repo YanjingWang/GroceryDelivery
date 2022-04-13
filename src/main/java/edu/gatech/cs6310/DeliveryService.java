@@ -1,10 +1,13 @@
 package edu.gatech.cs6310;
 
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DeliveryService {
 
     private static final String DELIMITER = ",";
+    private static Logger logger = LogManager.getLogger(DeliveryService.class);
 
     DeliveryServiceUtility deliveryServiceUtility = new DeliveryServiceUtility();
 
@@ -19,6 +22,7 @@ public class DeliveryService {
                 wholeInputLine = commandLineInput.nextLine();
                 tokens = wholeInputLine.split(DELIMITER);
                 System.out.println("> " + wholeInputLine);
+                logger.info("> " + wholeInputLine);
                 if (tokens[0].equals("make_store")) {
                     deliveryServiceUtility.makeStore(tokens[1], tokens[2]);
                } else if (tokens[0].equals("display_stores")) {
@@ -56,6 +60,7 @@ public class DeliveryService {
                     break;
                 } else if (!wholeInputLine.startsWith("//")) {
                     System.out.println("command " + tokens[0] + " NOT acknowledged");
+                    logger.info("command " + tokens[0] + " NOT acknowledged");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
