@@ -1,67 +1,88 @@
 package edu.gatech.cs6310;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 
 public class DBManager {
-    private static String driver = "com.mysql.cj.jdbc.Driver";
-    private static String connection = "jdbc:mysql://localhost:3306/delivery";
-    private static String user = "admin";
-    private static String password = "password";
+    private String driver = "com.mysql.cj.jdbc.Driver";
+    private String connection = "jdbc:mysql://database:3306/delivery";
+    private String user = "admin";
+    private String password = "password";
+    private static Logger logger = LogManager.getLogger(DBManager.class);
 
 
-    private static Connection con = null;
-    private static Statement state = null;
-    private static ResultSet result;
-    private static PreparedStatement pstate;
+    private Connection con = null;
+    private Statement state = null;
+    private ResultSet result;
+    private PreparedStatement pstate;
 
-    public static void mysqlConnect(){
+    public void mysqlConnect(){
         try{
             Class.forName(driver);
             con = DriverManager.getConnection(connection, user, password);
-            System.out.println("Successfully connected to database.");
         }
         catch(ClassNotFoundException e){
             System.err.println("Couldn't load driver.");
+            logger.error("Couldn't load driver.");
         }
         catch(SQLException e){
             System.err.println("Couldn't connect to database.");
+            logger.error("Couldn't connect to database.");
         }
     }
 
-    public static void showData(){
-        mysqlConnect();
+    public ResultSet get(String query){
+        this.mysqlConnect();
         try{
             state = con.createStatement();
-            result = state.executeQuery("select * from user where 1=1");
-            while(result.next()){
-                String user = result.getString("user_name");
-                String password = result.getString("password");
-                System.out.println("Username: " + user + " Password: " + password);
-            }
+            result = state.executeQuery(query);
         }
         catch(SQLException e){
-            System.err.println("Query error.");
+            System.err.println("Query error: " + query);
+            logger.error("Query error: " + query);
         }
         catch(NullPointerException e){
-            System.err.println("Element not found.");
+            System.err.println("Element not found." + e);
+            logger.error("Element not found." + e);
         }
-        closeConnection();
+
+        return result;
+    }
+
+    public int insert(String query){
+        this.mysqlConnect();
+        try{
+            state = con.createStatement();
+            return state.executeUpdate(query);
+        }
+        catch(SQLException e){
+            System.err.println("Query error: " + query);
+            logger.error("Query error: " + query);
+        }
+        catch(NullPointerException e){
+            System.err.println("Element not found." + e);
+            logger.error("Element not found." + e);
+        }
+
+        return -1;
     }
 
 
-
-    public static void closeConnection(){
+    public void closeConnection(){
         try{
             if(!con.isClosed()){
                 con.close();
-                System.out.println("Database closed successfully.");
             }
         }
         catch(NullPointerException e){
             System.err.println("Couldn't load driver.");
+            logger.error("Couldn't load driver.");
         }
         catch(SQLException e){
             System.err.println("Couldn't close database.");
+            logger.error("Couldn't close database.");
         }
     }
 

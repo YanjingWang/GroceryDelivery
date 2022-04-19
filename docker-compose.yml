@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  database:
+    image: mysql:8.0.28
+    command: mysqld --user=root
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql-dump:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: delivery
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+
+  app:
+    image: openjdk:17-slim
+    depends_on:
+      - database
+    links:
+      - database
+    volumes:
+      - ./target/drone_delivery-0.0.1.jar:/drone_delivery-0.0.1.jar
+
+volumes:
+  dbdata:
+    name: database_db
