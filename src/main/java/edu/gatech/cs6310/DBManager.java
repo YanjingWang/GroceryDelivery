@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class DBManager {
     private String driver = "com.mysql.cj.jdbc.Driver";
-    private String connection = "jdbc:mysql://localhost:3306/delivery";
+    private String connection = "jdbc:mysql://database:3306/delivery";
     private String user = "admin";
     private String password = "password";
     private static Logger logger = LogManager.getLogger(DBManager.class);
