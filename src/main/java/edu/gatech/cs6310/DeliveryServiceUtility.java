@@ -1,10 +1,6 @@
 package edu.gatech.cs6310;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-//import org.apache.log4j.Logger;
+import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +14,7 @@ public class DeliveryServiceUtility {
     private SortedMap<String, Customer> customers = new TreeMap<>();
     private Set<String> licenses = new HashSet<>();
     private static Logger logger = LogManager.getLogger(DeliveryServiceUtility.class);
+    private static Controller controller = new Controller();
 
     /**
      * Create a new store
@@ -26,12 +23,13 @@ public class DeliveryServiceUtility {
      * @param revenue
      */
     public void makeStore(String storeName, String revenue) {
-        if(stores.get(storeName) != null) {
+        Store current = controller.findStoreByName(storeName);
+        if (current != null) {
             System.out.println("ERROR: store_identifier_already_exists");
             logger.error("ERROR: store_identifier_already_exists");
             return;
         }
-        stores.put(storeName, new Store(storeName, Long.valueOf(revenue)));
+        boolean result = controller.createNewStore(new Store(storeName, Long.valueOf(revenue)));
         printSuccessfulChange();
     }
 
@@ -39,7 +37,8 @@ public class DeliveryServiceUtility {
      * Display the stores
      */
     public void displayStores() {
-        for(Store store : stores.values()) {
+        List<Store> allStores = controller.findAllStore();
+        for (Store store : allStores) {
             System.out.println(store);
             logger.info(store);
         }

@@ -17,36 +17,25 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`delivery` /*!40100 DEFAULT CHARACTER SE
 USE `delivery`;
 
 /*Table structure for table `customer` */
-DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `user` (
-  `account_id` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `firstname` varchar(50) NOT NULL,
-  `lastname` varchar(50) NOT NULL,
-  `phonenumber` varchar(50) NOT NULL,
-  PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `user`(`account_id`,`password`,`firstname`,`lastname`,`phonenumber`) VALUES
-('aapple2','123456','Alana','Apple','222-222-2222'),
-('ccherry4','234567','carlos','cherry','444-444-4444'),
-('ffig8','345678','Finneas','Fig','888-888-8888'),
-('ggrape17','456789','Gillian','Grape','999-999-9999');
 DROP TABLE IF EXISTS `customer`;
 
 CREATE TABLE `customer` (
-  `customer_id` varchar(50) NOT NULL,
+  `account_id` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `phone_no` varchar(50) NOT NULL,
   `rating` int(50) NOT NULL,
   `credit` int(50) NOT NULL,
-  PRIMARY KEY (`customer_id`)
+  PRIMARY KEY (`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
 
-insert  into `customer`(`customer_id`,`rating`,`credit`) values 
-('aapple2',4,100),
-('ccherry4',5,300);
-
+insert  into `customer`(`account_id`,`password`,`first_name`,`last_name`,`phone_no`,`rating`,`credit`) values 
+('aapple2','1','Alana','Apple','222-222-2222',4,100),
+('ccherry4','2','carlos','cherry','444-444-4444',5,300);
 
 /*Table structure for table `drone` */
 
@@ -54,21 +43,21 @@ DROP TABLE IF EXISTS `drone`;
 
 CREATE TABLE `drone` (
   `number` int(50) NOT NULL AUTO_INCREMENT COMMENT 'number',
-  `drone_id` varchar(50) NOT NULL COMMENT 'Drone Unique ID',
+  `id` varchar(50) NOT NULL COMMENT 'Drone Unique ID',
   `total_capacity` int(20) NOT NULL COMMENT 'totalCapacity of drone',
   `max_deliveries` int(20) NOT NULL COMMENT 'max deliveries need to maintance',
   `trips_completed` int(20) DEFAULT '0' COMMENT 'completed deliveries',
   `remain_Capacity` int(20) DEFAULT '0' COMMENT 'current remaining capacity',
-  `pilot_id` varchar(50) DEFAULT NULL COMMENT 'id of assigned pilot',
+  `account_id_pilot` varchar(50) DEFAULT NULL COMMENT 'account id of assigned pilot',
   `store_name` varchar(50) NOT NULL COMMENT 'drone belongs to',
-   PRIMARY KEY (`number`)
-  -- KEY `account_id_pilot` (`account_id_pilot`),
-  -- KEY `store_name` (`store_name`)
+  PRIMARY KEY (`number`),
+  KEY `account_id_pilot` (`account_id_pilot`),
+  KEY `store_name` (`store_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `drone` */
 
-insert  into `drone`(`number`,`drone_id`,`total_capacity`,`max_deliveries`,`trips_completed`,`remain_Capacity`,`pilot_id`,`store_name`) values 
+insert  into `drone`(`number`,`id`,`total_capacity`,`max_deliveries`,`trips_completed`,`remain_Capacity`,`account_id_pilot`,`store_name`) values 
 (1,'1',40,1,0,40,NULL,'kroger'),
 (2,'1',40,3,0,40,NULL,'publix'),
 (3,'2',20,3,0,20,NULL,'kroger'),
@@ -85,7 +74,7 @@ CREATE TABLE `item` (
   `item_name` varchar(50) NOT NULL,
   `unit_weight` int(50) NOT NULL,
   `store_name` varchar(50) NOT NULL,
-   PRIMARY KEY (`number`)
+  PRIMARY KEY (`number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `item` */
@@ -123,21 +112,24 @@ insert  into `order`(`no`,`store_name`,`order_id`,`drone_id`,`customer_id`) valu
 DROP TABLE IF EXISTS `pilot`;
 
 CREATE TABLE `pilot` (
-  `pilot_id` varchar(50) NOT NULL COMMENT 'Unique account',
+  `account_id` varchar(50) NOT NULL COMMENT 'Unique account',
+  `first_name` varchar(50) NOT NULL COMMENT 'first name',
+  `last_name` varchar(50) NOT NULL COMMENT 'last name',
+  `phone_no` varchar(50) NOT NULL COMMENT 'phone number',
   `tax_id` varchar(50) NOT NULL COMMENT 'unique SSN',
   `license_id` varchar(50) NOT NULL COMMENT 'unique licenseID',
   `experience` int(50) NOT NULL COMMENT 'completed trips',
   `store_name` varchar(50) DEFAULT NULL COMMENT 'assign a drone from store',
   `drone` int(50) DEFAULT NULL COMMENT 'assign a drone from store',
-  PRIMARY KEY (`pilot_id`),
+  PRIMARY KEY (`account_id`),
   KEY `tax_id` (`tax_id`,`license_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `pilot` */
 
-insert  into `pilot`(`pilot_id`,`tax_id`,`license_id`,`experience`,`store_name`,`drone`) values 
-('ffig8','890-12-3456','panam_10',33,NULL,NULL),
-('ggrape17','234-56-7890','twa_21',31,NULL,NULL);
+insert  into `pilot`(`account_id`,`first_name`,`last_name`,`phone_no`,`tax_id`,`license_id`,`experience`,`store_name`,`drone`) values 
+('ffig8','Finneas','Fig','888-888-8888','890-12-3456','panam_10',33,NULL,NULL),
+('ggrape17','Gillian','Grape','999-999-9999','234-56-7890','twa_21',31,NULL,NULL);
 
 /*Table structure for table `requested_item` */
 
@@ -145,24 +137,21 @@ DROP TABLE IF EXISTS `requested_item`;
 
 CREATE TABLE `requested_item` (
   `no` int(50) NOT NULL AUTO_INCREMENT COMMENT 'auto increment',
-  `item_name` varchar(50) NOT NULL COMMENT 'request item name',
   `store_name` varchar(50) NOT NULL COMMENT 'store name',
   `order_id` varchar(50) NOT NULL COMMENT 'order ID',
-  `unit_price` int(50) NOT NULL COMMENT 'item unit price',
-  `quantity` INT NOT NULL,
-  `totalprice` INT NOT NULL,
-  `totalweight` INT NOT NULL,
+  `item_name` varchar(50) NOT NULL COMMENT 'request item name',
   `weight` int(50) NOT NULL COMMENT 'item unit weight, may not be needed',
-   PRIMARY KEY (`no`)
+  `unit_price` int(50) NOT NULL COMMENT 'item unit price',
+  PRIMARY KEY (`no`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `requested_item` */
 
-insert  into `requested_item`(`no`,`item_name`,`store_name`,`order_id`,`unit_price`,`quantity`,`totalprice`,`totalweight`,`weight`) values 
-(1,'pot_roast','kroger','purchaseA',3,9,27,15,10),
-(2,'pot_roast','kroger','purchaseB',4,4,16,20,5),
-(3,'cheesecake','publix','purchaseaA',3,9,27,15,10), -- not sure 
-(4,'cheesecake','kroger','purchaseD',1,2,2,4,10); -- not sure
+insert  into `requested_item`(`no`,`store_name`,`order_id`,`item_name`,`weight`,`unit_price`) values 
+(1,'kroger','purchaseA','pot_roast',3,10),
+(2,'kroger','purchaseB','pot_roast',4,5),
+(3,'publix','purchaseaA','cheesecake',3,10),
+(4,'kroger','purchaseD','cheesecake',1,10);
 
 /*Table structure for table `store` */
 
