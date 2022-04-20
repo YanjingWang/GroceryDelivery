@@ -28,6 +28,7 @@ public class Controller {
         return store;
     }
 
+
     public List<Store> findAllStore() {
         List<Store> stores = new ArrayList<>();
         try (ResultSet rs = manager.get("select * from store where 1=1")) {
@@ -175,22 +176,6 @@ public class Controller {
         int rs_pilot = manager.insert("INSERT INTO delivery.pilot (`pilot_id`,`tax_id`,`license_id`, `experience`) VALUES ('" + accountId + "', '" + taxId + "', '" + licenseId + "', " + experience + ")");
         int rs_user = manager.insert("INSERT INTO delivery.pilot(`account_id`,`password`,`firstname`, `lastname`, `phonenumebr`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "',)");
         return rs_pilot == 1;
-    }
-
-    public Drone findDroneByID(String storeName, String id) {
-        Drone drone = null;
-        try (ResultSet rs = manager.get("SELECT * FROM drone WHERE `store_name` = '"+ storeName +"' AND `drone_id` = '" + id+ "'")) {
-            if (rs != null) {
-                rs.next();
-                String ID = rs.getString("drone_id");
-                Long totalCapacity = rs.getLong("total_capacity");
-                Integer maximumDeliveries = rs.getInt("max_deliveries");
-                drone = new Drone(ID, totalCapacity, maximumDeliveries);
-            }
-        } catch(SQLException e) {
-            logger.error("Error find drone by id: " + id + e);
-        }
-        return drone;
     }
 
 
