@@ -80,7 +80,7 @@ public class DeliveryServiceUtility {
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
-        for(Item item : store.getInventory().values()) {
+        for(Item item : controller.findAllItem(storeName).values()) {
             System.out.println(item);
             logger.info(item);
         }

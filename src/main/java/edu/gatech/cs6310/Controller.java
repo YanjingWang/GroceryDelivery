@@ -178,6 +178,32 @@ public class Controller {
         return rs_pilot == 1;
     }
 
+    public Customer findCustomerByID(String accountID) {
+        Customer customer = null;
+        User user =null;
+        try (ResultSet rs = manager.get("SELECT * " +
+                "FROM `customer` AS c " +
+                "INNER JOIN `user` AS u " +
+                "ON c.customer_id = u.account_id " +
+                "WHERE c.customer_id ='" + accountID + "'")) {
+            if (rs != null) {
+                rs.next();
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                String phoneNo = rs.getString("phonenumber");
+                user = new User(firstName,lastName,phoneNo);
+                String accountId = rs.getString("customer_id");
+                String rating = rs.getString("rating");
+                String credits = rs.getString("credit");
+
+                customer = new Customer(accountId, user, Integer.valueOf(rating), Long.valueOf(credits));
+            }
+        } catch(SQLException e) {
+            logger.error("Error find store by account: " + accountID + e);
+        }
+        return customer;
+    }
+
     public TreeMap<String,Customer> findAllCustomer(){
         TreeMap<String, Customer> customers = new TreeMap<>();
         try (ResultSet rs = manager.get("SELECT * FROM `customer` AS c INNER JOIN `user` AS u ON c.customer_id = u.account_id")) {
@@ -213,4 +239,21 @@ public class Controller {
         int rs_user = manager.insert("INSERT INTO delivery.user(`account_id`,`password`,`firstname`, `lastname`, `phonenumber`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "')");
         return rs_customer == 1;
     }
+
+    public Drone findDroneByID(String storeName,String droneid){
+        Drone drone = null;
+        try (ResultSet rs = manager.get("SELECT * FROM `drone` WHERE `store_name` = '"+ storeName +"' AND `item_name` = '" + droneid+ "'")) {
+            if (rs != null) {
+                rs.next();
+                String ID = rs.getString("drone_id");
+                Long totalCapacity = rs.getLong("total_capacity");
+                Integer maximumDeliveries = rs.getInt("max_deliveries");
+                drone = new Drone(ID, totalCapacity, maximumDeliveries);
+            }
+        } catch(SQLException e) {
+            logger.error("Error find store by account: " + droneid + e);
+        }
+        return drone;
+    }
+
 }
