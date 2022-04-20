@@ -10,6 +10,7 @@ public class Drone {
 
     // Refers to the accountId of the pilot that is currently controlling the drone
     private Pilot pilot;
+    private static Controller controller = new Controller();
 
     Drone(String id, Long totalCapacity, Integer maximumDeliveries) {
         this.id = id;
