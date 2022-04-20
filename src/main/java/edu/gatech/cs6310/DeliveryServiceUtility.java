@@ -219,21 +219,26 @@ public class DeliveryServiceUtility {
      * @param credits
      */
     public void makeCustomer(String customerId, String firstName, String lastName, String phoneNo, String rating, String credits) {
-        Customer customer = customers.get(customerId);
+        Customer customer = controller.findCustomerByID(customerId);
         if(customer != null) {
             System.out.println("ERROR: customer_identifier_already_exists");
             logger.error("ERROR: customer_identifier_already_exists");
             return;
         }
-
-        customers.put(customerId, new Customer(customerId, new User(firstName, lastName,phoneNo), Integer.valueOf(rating),Long.valueOf(credits)));
+        controller.createNewCustomer(new Customer(
+                                     customerId,
+                                     new User(firstName, lastName, phoneNo),
+                                     Integer.valueOf(rating), Long.valueOf(credits))
+                                    );
         printSuccessfulChange();
     }
+
 
     /**
      * Display customers
      */
     public void displayCustomers() {
+        TreeMap<String,Customer> customers = controller.findAllCustomer();
         for(Customer customer: customers.values()) {
             System.out.println(customer);
             logger.info(customer);
