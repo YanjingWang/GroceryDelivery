@@ -53,17 +53,19 @@ public class DeliveryServiceUtility {
      * @param weight
      */
     public void sellItem(String storeName, String itemName, String weight) {
-        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
-            System.out.println("ERROR: store_identifier_already_exists");
-            logger.error("ERROR: store_identifier_already_exists");
+            System.out.println("ERROR: store_identifier_does_not_exist");
+            logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
-        if(!store.addInventory(new Item(itemName, Long.valueOf(weight)))){
+        Item item = controller.findItemByName(storeName,itemName);
+        if(item !=null){
             System.out.println("ERROR: item_identifier_already_exists");
             logger.error("ERROR: item_identifier_already_exists");
             return;
         }
+        boolean result = controller.createNewItem(storeName, new Item(itemName,Long.valueOf(weight)));
         printSuccessfulChange();
     }
 
@@ -73,7 +75,7 @@ public class DeliveryServiceUtility {
      * @param storeName
      */
     public void displayItems(String storeName) {
-        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
@@ -98,20 +100,23 @@ public class DeliveryServiceUtility {
      * @param experience
      */
     public void makePilot(String accountId, String firstName, String lastName, String phoneNo, String taxId, String licenseId, String experience) {
-        Pilot pilot = pilots.get(accountId);
+        Pilot pilot = controller.findPilotByID(accountId);
         if(pilot != null) {
             System.out.println("ERROR: pilot_identifier_already_exists");
             logger.error("ERROR: pilot_identifier_already_exists");
             return;
         }
+        Set<String> licenses = controller.findAllLicense();
         if(licenses.contains(licenseId)) {
             System.out.println("ERROR: pilot_license_already_exists");
             logger.error("ERROR: pilot_identifier_already_exists");
             return;
         }
+        boolean result = controller.createNewPilot(new Pilot(accountId, new User(firstName, lastName,phoneNo), taxId, licenseId, Integer.valueOf(experience)));
+        printSuccessfulChange();
 
-        pilots.put(accountId, new Pilot(accountId, new User(firstName, lastName,phoneNo), taxId, licenseId, Integer.valueOf(experience)));
-        licenses.add(licenseId);
+//        pilots.put(accountId, new Pilot(accountId, new User(firstName, lastName,phoneNo), taxId, licenseId, Integer.valueOf(experience)));
+//        licenses.add(licenseId);
         printSuccessfulChange();
     }
 
@@ -119,6 +124,7 @@ public class DeliveryServiceUtility {
      * Display the pilots
      */
     public void displayPilots() {
+        TreeMap<String,Pilot> pilots = controller.findAllPilot();
         for(Pilot pilot: pilots.values()) {
             System.out.println(pilot);
             logger.info(pilot);
