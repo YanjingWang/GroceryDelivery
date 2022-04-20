@@ -52,7 +52,7 @@ public class Store {
 
     public boolean addDrone(Drone drone) {
 //        Drone storeDrone =  drones.get(drone.getId());
-        Drone storeDrone =  controller.findDroneByID(storeName, drone.getId());
+        Drone storeDrone =  controller.findDroneByID(this.storeName, drone.getId());
         if(storeDrone != null) {
             return false;
         }
@@ -65,7 +65,8 @@ public class Store {
     }
 
     public boolean addOrder(Order order) {
-        Order storeOrder = orders.get(order.getOrderId());
+//        Order storeOrder = orders.get(order.getOrderId());
+        Order storeOrder = controller.findOrderByID(this.storeName, order.getOrderId());
         if(storeOrder != null) {
             return false;
         }

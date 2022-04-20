@@ -256,4 +256,39 @@ public class Controller {
         return drone;
     }
 
+    public TreeMap<String,Order> findAllOrder(String storeName){
+        TreeMap<String, Order> orders = new TreeMap<>();
+        try (ResultSet rs = manager.get("SELECT * FROM `order` WHERE `store_name` = '"+ storeName +"'")) {
+            if (rs != null) {
+                while (rs.next()) {
+                    String orderId = rs.getString("order_id");
+                    String droneId = rs.getString("drone_id");
+                    String requestedBy = rs.getString("customer_id");
+                    orders.put(orderId, new Order(orderId, droneId, requestedBy));
+                }
+            }
+        } catch(SQLException e) {
+            System.out.println("Error find all orders. " + e);
+            logger.error("Error find all orders. " + e);
+        } finally {
+            manager.closeConnection();
+        }
+        return orders;
+    }
+
+    public Order findOrderByID(String storeName,String orderid){
+        Order order = null;
+        try (ResultSet rs = manager.get("SELECT * FROM `order` WHERE `store_name` = '"+ storeName +"' AND `order_id` = '" + orderid+ "'")) {
+            if (rs != null) {
+                rs.next();
+                String orderId = rs.getString("order_id");
+                String droneId = rs.getString("drone_id");
+                String requestedBy = rs.getString("customer_id");
+                order = new Order(orderId, droneId, requestedBy);
+            }
+        } catch(SQLException e) {
+            logger.error("Error find store by account: " + orderid + e);
+        }
+        return order;
+    }
 }
