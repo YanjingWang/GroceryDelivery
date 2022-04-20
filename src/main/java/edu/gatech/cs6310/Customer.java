@@ -14,6 +14,22 @@ public class Customer {
         this.credits = credits;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Integer getRating(){ return rating;}
+
+    public Long getCredits(){ return credits;}
+
+    public String getAccountId() {
+        return this.customerId;
+    }
+
     public void updateUsedCredits(Long credits) {
         usedCredits += credits;
     }
