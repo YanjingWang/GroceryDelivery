@@ -59,8 +59,7 @@ public class DeliveryServiceUtility {
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
-        Item item = controller.findItemByName(storeName,itemName);
-        if(item !=null){
+        if(!store.addInventory(new Item(itemName, Long.valueOf(weight)))){
             System.out.println("ERROR: item_identifier_already_exists");
             logger.error("ERROR: item_identifier_already_exists");
             return;
@@ -141,7 +140,7 @@ public class DeliveryServiceUtility {
      * @param maxDeliveries
      */
     public void makeDrone(String storeName, String droneId, String maxCapacity, String maxDeliveries) {
-        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
@@ -182,20 +181,21 @@ public class DeliveryServiceUtility {
      * @param pilotAccountId
      */
     public void flyDrone(String storeName, String droneId, String pilotAccountId) {
-        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
-        Drone drone = store.getDrones().get(droneId);
+//        Drone drone = store.getDrones().get(droneId);
+        Drone drone = controller.findDroneByID(storeName,droneId);
         if(drone == null) {
             System.out.println("ERROR: drone_identifier_does_not_exist");
             logger.error("ERROR: drone_identifier_does_not_exist");
             return;
         }
-
-        Pilot pilot = pilots.get(pilotAccountId);
+//        Pilot pilot = pilots.get(pilotAccountId);
+        Pilot pilot = controller.findPilotByID(pilotAccountId);
         if(pilot == null) {
             System.out.println("ERROR: pilot_identifier_does_not_exist");
             logger.error("ERROR: pilot_identifier_does_not_exist");

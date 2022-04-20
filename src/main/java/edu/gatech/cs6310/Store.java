@@ -14,6 +14,8 @@ public class Store {
     private SortedMap<String, Drone> drones = new TreeMap<>();
     private SortedMap<String, Order> orders = new TreeMap<>();
 
+    private static Controller controller = new Controller();
+
     public Store(String inputName, Long inputNumber) {
         this.storeName = inputName;
         this.revenue = inputNumber;
@@ -40,7 +42,7 @@ public class Store {
     }
 
     public boolean addInventory(Item item) {
-        Item invetoryItem = inventory.get(item.getItemName());
+        Item invetoryItem = controller.findItemByName(storeName,item.getItemName());
         if(invetoryItem != null) {
             return false;
         }
@@ -49,7 +51,8 @@ public class Store {
     }
 
     public boolean addDrone(Drone drone) {
-        Drone storeDrone =  drones.get(drone.getId());
+//        Drone storeDrone =  drones.get(drone.getId());
+        Drone storeDrone =  controller.findDroneByID(storeName, drone.getId());
         if(storeDrone != null) {
             return false;
         }
