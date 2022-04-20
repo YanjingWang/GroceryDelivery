@@ -28,6 +28,7 @@ public class Controller {
         return store;
     }
 
+
     public List<Store> findAllStore() {
         List<Store> stores = new ArrayList<>();
         try (ResultSet rs = manager.get("select * from store where 1=1")) {
@@ -177,21 +178,39 @@ public class Controller {
         return rs_pilot == 1;
     }
 
-    public Drone findDroneByID(String storeName, String id) {
-        Drone drone = null;
-        try (ResultSet rs = manager.get("SELECT * FROM drone WHERE `store_name` = '"+ storeName +"' AND `drone_id` = '" + id+ "'")) {
+    public TreeMap<String,Customer> findAllCustomer(){
+        TreeMap<String, Customer> customers = new TreeMap<>();
+        try (ResultSet rs = manager.get("SELECT * FROM `customer` AS c INNER JOIN `user` AS u ON c.customer_id = u.account_id")) {
             if (rs != null) {
-                rs.next();
-                String ID = rs.getString("drone_id");
-                Long totalCapacity = rs.getLong("total_capacity");
-                Integer maximumDeliveries = rs.getInt("max_deliveries");
-                drone = new Drone(ID, totalCapacity, maximumDeliveries);
+                while (rs.next()) {
+                    String firstName = rs.getString("firstname");
+                    String lastName = rs.getString("lastname");
+                    String phoneNo = rs.getString("phonenumber");
+                    String accountId = rs.getString("customer_id");
+                    String rating = rs.getString("rating");
+                    String credits = rs.getString("credit");
+                    customers.put(accountId, new Customer(accountId, new User(firstName, lastName,phoneNo), Integer.valueOf(rating), Long.valueOf(credits)));
+                }
             }
         } catch(SQLException e) {
-            logger.error("Error find drone by id: " + id + e);
+            System.out.println("Error find all pilots. " + e);
+            logger.error("Error find all pilots. " + e);
+        } finally {
+            manager.closeConnection();
         }
-        return drone;
+        return customers;
     }
 
-
+    public boolean createNewCustomer(Customer customer) {
+        String accountId = customer.getAccountId();
+        String firstName = customer.getUser().getFirstName();
+        String lastName = customer.getUser().getLastName();
+        String phoneNo = customer.getUser().getPhoneNumber();
+        Integer rating = customer.getRating();
+        Long credits = customer.getCredits();
+        String password = "123";
+        int rs_customer = manager.insert("INSERT INTO delivery.customer (`customer_id`,`rating`,`credit`) VALUES ('" + accountId + "', " + rating + ", " + credits + ")");
+        int rs_user = manager.insert("INSERT INTO delivery.user(`account_id`,`password`,`firstname`, `lastname`, `phonenumber`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "')");
+        return rs_customer == 1;
+    }
 }
