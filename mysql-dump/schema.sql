@@ -128,7 +128,7 @@ CREATE TABLE `pilot` (
   `license_id` varchar(50) NOT NULL COMMENT 'unique licenseID',
   `experience` int(50) NOT NULL COMMENT 'completed trips',
   `store_name` varchar(50) DEFAULT NULL COMMENT 'assign a drone from store',
-  `drone` int(50) DEFAULT NULL COMMENT 'assign a drone from store',
+  `drone` varchar(50) DEFAULT NULL COMMENT 'assign a drone from store',
   PRIMARY KEY (`pilot_id`),
   KEY `tax_id` (`tax_id`,`license_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

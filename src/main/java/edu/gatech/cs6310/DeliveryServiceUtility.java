@@ -80,7 +80,7 @@ public class DeliveryServiceUtility {
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
-        for(Item item : store.getInventory().values()) {
+        for(Item item : controller.findAllItem(storeName).values()) {
             System.out.println(item);
             logger.info(item);
         }
@@ -255,7 +255,7 @@ public class DeliveryServiceUtility {
      * @param customerId
      */
     public void startOrder(String storeName, String orderId, String droneId, String customerId) {
-        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
@@ -286,14 +286,14 @@ public class DeliveryServiceUtility {
      * @param storeName
      */
     public void displayOrders(String storeName) {
-        Store store = stores.get(storeName);
+//        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
-
-        for(Order order : store.getOrders().values()) {
+        for(Order order : controller.findAllOrder(storeName).values()) {
             System.out.println(order);
             if(!order.getItems().isEmpty()) {
                 order.getItems().forEach( item ->  {
