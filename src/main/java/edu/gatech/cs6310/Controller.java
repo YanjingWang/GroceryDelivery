@@ -12,6 +12,26 @@ public class Controller {
     private static DBManager manager = new DBManager();
     private static Logger logger = LogManager.getLogger(Controller.class);
 
+    public User validateUserLogin(String username, String inputPassword) {
+        User user = null;
+        try (ResultSet rs = manager.get("select * from user where account_id='" + username + "'")) {
+            if (rs != null) {
+                rs.next();
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String phonenumber = rs.getString("phonenumber");
+                String hashPassword = rs.getString("password");
+                if (hashPassword.equals(inputPassword)) {
+                    user = new User(firstname, lastname, phonenumber);
+                }
+            }
+        } catch(SQLException e) {
+            logger.error("Error find user by name: " + username + e);
+        }
+
+        return user;
+    }
+
 
     public Store findStoreByName(String name) {
         Store store = null;

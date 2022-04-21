@@ -8,8 +8,14 @@ public class DeliveryService {
 
     private static final String DELIMITER = ",";
     private static Logger logger = LogManager.getLogger(DeliveryService.class);
+    private User user;
 
-    DeliveryServiceUtility deliveryServiceUtility = new DeliveryServiceUtility();
+    public DeliveryService(User user) {
+        this.user = user;
+    }
+
+
+    DeliveryServiceUtility deliveryServiceUtility = new DeliveryServiceUtility(this.user);
 
     public void commandLoop() {
         Scanner commandLineInput = new Scanner(System.in);
