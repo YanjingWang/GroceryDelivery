@@ -15,6 +15,7 @@ public class Order {
             return o1.getItemName().compareTo(o2.getItemName());
         }
     });
+    private static Controller controller = new Controller();
 
     public Order(String orderId, String droneId, String requestedBy) {
         this.orderId = orderId;
