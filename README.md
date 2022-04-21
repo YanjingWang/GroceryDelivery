@@ -13,3 +13,11 @@ If you mess up the database for some reason, you can run below command to remove
 ```
 docker-compose down && docker volume rm database_db
 ```
+
+# Default User:
+The default user when you load the new database: 
+```
+username: admin
+password: password
+```
+

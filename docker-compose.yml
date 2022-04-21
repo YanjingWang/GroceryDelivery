@@ -14,7 +14,7 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
-
+    restart: always
   app:
     image: openjdk:17-slim
     depends_on:
@@ -23,6 +23,7 @@ services:
       - database
     volumes:
       - ./target/drone_delivery-0.0.1.jar:/drone_delivery-0.0.1.jar
+    restart: always
 
 volumes:
   dbdata:
