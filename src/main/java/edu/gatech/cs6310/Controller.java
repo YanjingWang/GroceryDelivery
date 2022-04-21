@@ -72,7 +72,7 @@ public class Controller {
     public boolean createNewItem(String storeName, Item item){
         String itemName = item.getItemName();
         Long weight = item.getWeight();
-        int rs = manager.insert("INSERT INTO delivery.store(item_name, unit_weight, store_name) VALUES ('" + itemName + "', " + weight + ",'" + storeName + "')");
+        int rs = manager.insert("INSERT INTO delivery.item(item_name, unit_weight, store_name) VALUES ('" + itemName + "', " + weight + ",'" + storeName + "')");
         return rs == 1;
     }
 
@@ -174,7 +174,7 @@ public class Controller {
         Integer experience = pilot.getExperience();
         String password = "123";
         int rs_pilot = manager.insert("INSERT INTO delivery.pilot (`pilot_id`,`tax_id`,`license_id`, `experience`) VALUES ('" + accountId + "', '" + taxId + "', '" + licenseId + "', " + experience + ")");
-        int rs_user = manager.insert("INSERT INTO delivery.pilot(`account_id`,`password`,`firstname`, `lastname`, `phonenumebr`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "',)");
+        int rs_user = manager.insert("INSERT INTO delivery.user (`account_id`,`password`,`firstname`, `lastname`, `phonenumebr`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "',)");
         return rs_pilot == 1;
     }
 
@@ -258,13 +258,21 @@ public class Controller {
 
     public TreeMap<String,Order> findAllOrder(String storeName){
         TreeMap<String, Order> orders = new TreeMap<>();
-        try (ResultSet rs = manager.get("SELECT * FROM `order` WHERE `store_name` = '"+ storeName +"'")) {
+        try (ResultSet rs = manager.get("SELECT * FROM `order` AS o INNER JOIN `requested_item` AS r ON o.order_id = r.order_id WHERE o.store_name = '"+ storeName +"'")) {
             if (rs != null) {
                 while (rs.next()) {
                     String orderId = rs.getString("order_id");
                     String droneId = rs.getString("drone_id");
                     String requestedBy = rs.getString("customer_id");
-                    orders.put(orderId, new Order(orderId, droneId, requestedBy));
+                    if (!orders.containsKey(orderId)){
+                        orders.put(orderId, new Order(orderId, droneId, requestedBy));
+                    }
+                    String itemName = rs.getString("item_name");
+                    Long weight = rs.getLong("weight");
+                    Integer quantity = rs.getInt("quantity");
+                    Integer unitPrice = rs.getInt("unit_price");
+                    RequestedItem item = new RequestedItem(itemName,weight,quantity,unitPrice);
+                    orders.get(orderId).addItem(item);
                 }
             }
         } catch(SQLException e) {
