@@ -8,7 +8,7 @@ public class Pilot {
     private String licenseId;
     private Integer experience;
 
-    private Drone assignedDrone;
+    private Drone assignedDrone = null;
 
     public Pilot(String accountId, User user, String taxId, String licenseId, Integer experience) {
         this.accountId = accountId;

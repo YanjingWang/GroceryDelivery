@@ -9,10 +9,8 @@ public class Drone {
     private Integer maximumDeliveries;
 
     // Refers to the accountId of the pilot that is currently controlling the drone
-    private Pilot pilot;
+    private Pilot pilot = null;
     private static Controller controller = new Controller();
-
-
 
     Drone(String id, Long totalCapacity, Integer maximumDeliveries) {
         this.id = id;
@@ -20,6 +18,18 @@ public class Drone {
         this.remainingCapacity = totalCapacity;
         this.tripsCompleted = 0;
         this.maximumDeliveries = maximumDeliveries;
+    }
+
+    public void setRemainingCapacity(Long remainingCapacity) {
+        this.remainingCapacity = remainingCapacity;
+    }
+
+    public void setTripsCompleted(Integer tripsCompleted) {
+        this.tripsCompleted = tripsCompleted;
+    }
+
+    public void setPilot(Pilot pilot) {
+        this.pilot = pilot;
     }
 
     public Long getTotalCapacity() {

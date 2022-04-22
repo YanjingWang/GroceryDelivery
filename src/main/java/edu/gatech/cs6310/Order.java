@@ -27,6 +27,9 @@ public class Order {
     }
 
     public boolean addItem(RequestedItem item) {
+        if(item.getItemName() == null){
+            return false;
+        }
         if(!this.items.add(item)) {
             return false;
         }
