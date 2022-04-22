@@ -1,6 +1,9 @@
 A5 Repo for CS6310 Fall 2021
 # Build Project With Maven:
-Build jar file with Maven, recommend to build in Intellij IDE. It will build the jar file in `target` folder.
+Build jar file with Maven, Please install Maven `3.8.5` ([How To Install Maven](https://phoenixnap.com/kb/install-maven-on-ubuntu))  then run command:
+```
+mvn package
+```
 
 # Run Application With Docker Compose:
 After you build the jar file, you can run below command to start the application with database setup properly.
@@ -20,4 +23,3 @@ The default user when you load the new database:
 username: admin
 password: password
 ```
-
