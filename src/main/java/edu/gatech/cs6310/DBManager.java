@@ -82,6 +82,24 @@ public class DBManager {
         return -1;
     }
 
+    public int update(String query){
+        this.mysqlConnect();
+        try{
+            state = con.createStatement();
+            return state.executeUpdate(query);
+        }
+        catch(SQLException e){
+            System.err.println("Query error: " + query);
+            logger.error("Query error: " + query);
+        }
+        catch(NullPointerException e){
+            System.err.println("Element not found." + e);
+            logger.error("Element not found." + e);
+        }
+
+        return -1;
+    }
+
     public void closeConnection(){
         try{
             if(!con.isClosed()){

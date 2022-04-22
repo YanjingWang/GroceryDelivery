@@ -162,7 +162,7 @@ CREATE TABLE `requested_item` (
 insert  into `requested_item`(`no`,`item_name`,`store_name`,`order_id`,`unit_price`,`quantity`,`totalprice`,`totalweight`,`weight`) values 
 (1,'pot_roast','kroger','purchaseA',3,9,27,15,10),
 (2,'pot_roast','kroger','purchaseB',4,4,16,20,5),
-(3,'cheesecake','publix','purchaseaA',3,9,27,15,10), -- not sure 
+(3,'cheesecake','publix','purchaseA',3,9,27,15,10), -- not sure
 (4,'cheesecake','kroger','purchaseD',1,2,2,4,10); -- not sure
 
 /*Table structure for table `store` */

@@ -15,6 +15,14 @@ public class RequestedItem extends Item{
         this.totalWeight = quantity * weight;
     }
 
+    public Integer getUnitPrice() {
+        return unitPrice;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
     public Integer getTotalPrice() {
         return this.totalPrice;
     }
