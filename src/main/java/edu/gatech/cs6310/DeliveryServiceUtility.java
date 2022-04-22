@@ -213,10 +213,11 @@ public class DeliveryServiceUtility {
             logger.error("ERROR: pilot_identifier_does_not_exist");
             return;
         }
-        if(pilot.getAssignedDrone() != null) {
-            pilot.getAssignedDrone().unassignPilot();
-        }
-        drone.assignPilot(pilot);
+//        if(pilot.getAssignedDrone() != null) {
+//            pilot.getAssignedDrone().unassignPilot();
+//        }
+//        drone.assignPilot(pilot);
+        controller.driveDrone(storeName,drone,pilot);
         printSuccessfulChange();
     }
 
