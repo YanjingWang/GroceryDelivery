@@ -61,16 +61,19 @@ public class Store {
     }
 
     public void removeOrder(Order order) {
-         this.orders.remove(order.getOrderId());
+//         this.orders.remove(order.getOrderId());
+        controller.deleteOrder(this.storeName,order);
     }
 
     public boolean addOrder(Order order) {
 //        Order storeOrder = orders.get(order.getOrderId());
-        Order storeOrder = controller.findOrderByID(this.storeName, order.getOrderId());
+        Order storeOrder = null;
+        storeOrder = controller.findOrderByID(this.storeName, order.getOrderId());
         if(storeOrder != null) {
             return false;
         }
-        this.orders.put(order.getOrderId(), order);
+//        this.orders.put(order.getOrderId(), order);
+        controller.createNewOrder(this.storeName, order);
         return true;
     }
 
