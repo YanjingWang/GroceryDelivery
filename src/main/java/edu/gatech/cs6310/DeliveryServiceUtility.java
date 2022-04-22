@@ -151,6 +151,7 @@ public class DeliveryServiceUtility {
             logger.error("ERROR: drone_identifier_already_exists");
             return;
         }
+        boolean result = controller.createNewDrone(storeName, new Drone(droneId,Long.valueOf(maxCapacity),Integer.valueOf(maxDeliveries)));
         printSuccessfulChange();
     }
 
@@ -160,18 +161,23 @@ public class DeliveryServiceUtility {
      * @param storeName
      */
     public void displayDrones(String storeName) {
-        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
-        for(Drone drone : store.getDrones().values()) {
-            System.out.println(drone);
-            logger.info(drone);
+        else{
+        TreeMap<String,Drone> allDrones = controller.findAllDrone(storeName);
+            for (Drone drone : allDrones.values()) {
+                System.out.println(drone);
+                logger.info(drone);
+            }
+            printSuccessfulDisplay();
         }
-        printSuccessfulDisplay();
     }
+
+
 
     /**
      * Assign a drone to a pilot and vice-versa
