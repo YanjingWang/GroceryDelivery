@@ -273,13 +273,15 @@ public class DeliveryServiceUtility {
             logger.error("ERROR: order_identifier_already_exists");
             return;
         }
-        if(store.getDrones().get(droneId) == null) {
+//        if(store.getDrones().get(droneId) == null)
+        if(controller.findDroneByID(storeName,droneId) == null) {
             System.out.println("ERROR: drone_identifier_does_not_exist");
             logger.error("ERROR: drone_identifier_does_not_exist");
             store.removeOrder(newOrder);
             return;
         }
-        if(customers.get(customerId) == null) {
+//        if(customers.get(customerId) == null)
+        if(controller.findCustomerByID(customerId) == null) {
             System.out.println("ERROR: customer_identifier_does_not_exist");
             logger.error("ERROR: customer_identifier_does_not_exist");
             return;
@@ -287,7 +289,7 @@ public class DeliveryServiceUtility {
     printSuccessfulChange();
     }
 
-    /**
+    /**disp
      * Display the orders
      * @param storeName
      */
@@ -321,35 +323,41 @@ public class DeliveryServiceUtility {
      * @param unitPrice
      */
     public void requestItem(String storeName, String orderId, String itemName, String quantity, String unitPrice){
-        Store store = stores.get(storeName);
+//        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
-        Order order = store.getOrders().get(orderId);
+//        Order order = store.getOrders().get(orderId);
+        Order order = controller.findOrderByID(storeName,orderId);
         if(order == null) {
             System.out.println("ERROR: order_identifier_does_not_exist");
             logger.error("ERROR: order_identifier_does_not_exist");
             return;
         }
-        Item item = store.getInventory().get(itemName);
+//        Item item = store.getInventory().get(itemName);
+        Item item = controller.findItemByName(storeName,itemName);
         if(item == null) {
             System.out.println("ERROR: item_identifier_does_not_exist");
             logger.error("ERROR: item_identifier_does_not_exist");
             return;
         }
-        if(order.getItems().contains(item)) {
+        RequestedItem requestedItem = new RequestedItem(itemName, item.getWeight(), Integer.valueOf(quantity), Integer.valueOf(unitPrice));
+        if(controller.findOrderItem(order).getItems().contains(requestedItem)) {
             System.out.println("ERROR: item_already_ordered");
             logger.error("ERROR: item_already_ordered");
             return;
         }
-        RequestedItem requestedItem = new RequestedItem(itemName, item.getWeight(), Integer.valueOf(quantity), Integer.valueOf(unitPrice));
-        Customer customer = customers.get(order.getCustomer());
+//        RequestedItem requestedItem = new RequestedItem(itemName, item.getWeight(), Integer.valueOf(quantity), Integer.valueOf(unitPrice));
+//        Customer customer = customers.get(order.getCustomer());
+        Customer customer = controller.findCustomerByID(order.getCustomer());
 
         Integer totalCostOfItemsCurrentlyInOrder = 0;
         Long totalWeightCurrentlyInOrder = 0L;
-        for(RequestedItem items : order.getItems()) {
+//        for(RequestedItem items : order.getItems())
+        for(RequestedItem items : controller.findOrderItem(order).getItems()){
             totalCostOfItemsCurrentlyInOrder += items.getTotalPrice();
             totalWeightCurrentlyInOrder += items.getTotalWeight();
         }
@@ -360,14 +368,17 @@ public class DeliveryServiceUtility {
             return;
         }
 
-        Drone drone = store.getDrones().get(order.getDroneId());
+//        Drone drone = store.getDrones().get(order.getDroneId());
+        Drone drone = controller.findDroneByID(storeName,order.getDroneId());
+        System.out.println(drone.getTotalCapacity() + drone.getRemainingCapacity());
         if(!drone.canCarry(totalWeightCurrentlyInOrder + requestedItem.getTotalWeight())) {
             System.out.println("ERROR: drone_cant_carry_new_item");
             logger.error("ERROR: drone_cant_carry_new_item");
             return;
         }
 
-        order.addItem(requestedItem);
+//        order.addItem(requestedItem);
+        boolean result = controller.createNewOrderItem(storeName,order,requestedItem);
         printSuccessfulChange();
     }
 

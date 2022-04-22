@@ -20,6 +20,14 @@ public class Drone {
         this.maximumDeliveries = maximumDeliveries;
     }
 
+    public Long getTotalCapacity() {
+        return totalCapacity;
+    }
+
+    public Long getRemainingCapacity() {
+        return remainingCapacity;
+    }
+
     public void addPayload(Long weight) {
         remainingCapacity -= weight;
     }

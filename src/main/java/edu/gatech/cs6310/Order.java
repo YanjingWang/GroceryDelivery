@@ -9,13 +9,12 @@ public class Order {
     private String orderId;
     private String requestedBy;
     private String droneId;
-    private SortedSet<RequestedItem> items = new TreeSet<>(new Comparator<Item>() {
+    private SortedSet<RequestedItem> items = new TreeSet<>(new Comparator<RequestedItem>() {
         @Override
-        public int compare(Item o1, Item o2) {
+        public int compare(RequestedItem o1, RequestedItem o2) {
             return o1.getItemName().compareTo(o2.getItemName());
         }
     });
-    private static Controller controller = new Controller();
 
     public Order(String orderId, String droneId, String requestedBy) {
         this.orderId = orderId;

@@ -32,7 +32,6 @@ public class Controller {
         return user;
     }
 
-
     public Store findStoreByName(String name) {
         Store store = null;
         try (ResultSet rs = manager.get("select * from store where store_name='" + name + "'")) {
@@ -47,7 +46,6 @@ public class Controller {
         }
         return store;
     }
-
 
     public List<Store> findAllStore() {
         List<Store> stores = new ArrayList<>();
@@ -262,7 +260,7 @@ public class Controller {
 
     public Drone findDroneByID(String storeName,String droneid){
         Drone drone = null;
-        try (ResultSet rs = manager.get("SELECT * FROM `drone` WHERE `store_name` = '"+ storeName +"' AND `item_name` = '" + droneid+ "'")) {
+        try (ResultSet rs = manager.get("SELECT * FROM `drone` WHERE `store_name` = '"+ storeName +"' AND `drone_id` = '" + droneid+ "'")) {
             if (rs != null) {
                 rs.next();
                 String ID = rs.getString("drone_id");
@@ -278,15 +276,13 @@ public class Controller {
 
     public TreeMap<String,Order> findAllOrder(String storeName){
         TreeMap<String, Order> orders = new TreeMap<>();
-        try (ResultSet rs = manager.get("SELECT * FROM `order` AS o INNER JOIN `requested_item` AS r ON o.order_id = r.order_id WHERE o.store_name = '"+ storeName +"'")) {
+        try (ResultSet rs = manager.get("SELECT * FROM `order` AS o LEFT JOIN `requested_item` AS r ON o.order_id = r.order_id AND o.store_name = r.store_name WHERE o.store_name = '"+ storeName +"'")) {
             if (rs != null) {
                 while (rs.next()) {
-                    String orderId = rs.getString("order_id");
-                    String droneId = rs.getString("drone_id");
-                    String requestedBy = rs.getString("customer_id");
-                    if (!orders.containsKey(orderId)){
-                        orders.put(orderId, new Order(orderId, droneId, requestedBy));
-                    }
+                    String orderId = rs.getString("o.order_id");
+                    String droneId = rs.getString("o.drone_id");
+                    String requestedBy = rs.getString("o.customer_id");
+                    orders.put(orderId, new Order(orderId, droneId, requestedBy));
                     String itemName = rs.getString("item_name");
                     Long weight = rs.getLong("weight");
                     Integer quantity = rs.getInt("quantity");
@@ -319,6 +315,52 @@ public class Controller {
         }
         return order;
     }
+
+    public boolean createNewOrder(String storeName,Order order) {
+        String orderId = order.getOrderId();
+        String droneId = order.getDroneId();
+        String customerId = order.getCustomer();
+        int rs_order = manager.insert("INSERT INTO delivery.order (`store_name`, `order_id`, `drone_id`,`customer_id`) VALUES ('" + storeName + "', '" + orderId + "', '" + droneId + "', '" + customerId + "')");
+        return rs_order == 1;
+    }
+
+    public boolean deleteOrder(String storeName,Order order) {
+        String orderId = order.getOrderId();
+        String droneId = order.getDroneId();
+        String customerId = order.getCustomer();
+        int rs_order = manager.delete("DELETE FROM `order` WHERE `store_name` = '" +storeName+"' AND `order_id` = '" + orderId + "'");
+        return rs_order == 1;
+    }
+
+    public  Order findOrderItem(Order order){
+        try (ResultSet rs = manager.get("SELECT * FROM `order` AS o INNER JOIN `requested_item` AS r ON o.order_id = r.order_id AND o.store_name = r.store_name WHERE o.order_id = '" + order.getOrderId() + "'")) {
+            if (rs != null) {
+                rs.next();
+                String itemName = rs.getString("item_name");
+                Long weight = rs.getLong("weight");
+                Integer quantity = rs.getInt("quantity");
+                Integer unitPrice = rs.getInt("unit_price");
+                RequestedItem item = new RequestedItem(itemName,weight,quantity,unitPrice);
+                order.addItem(item);
+            }
+        } catch(SQLException e) {
+            logger.error("Error find order items: " + order.getOrderId() + e);
+        }
+        return order;
+    }
+
+    public boolean createNewOrderItem(String storeName,Order order,RequestedItem item) {
+        String orderId = order.getOrderId();
+        String itemName = item.getItemName();
+        Long weight = item.getWeight();
+        Integer quantity = item.getQuantity();
+        Integer unitPrice = item.getUnitPrice();
+        Integer totalPrice = item.getTotalPrice();
+        Long totalWeight = item.getTotalWeight();
+        int rs_order = manager.insert("INSERT INTO delivery.requested_item (`item_name`, `store_name`, `order_id`,`unit_price`, `quantity`, `totalprice`, `totalweight`,`weight`) VALUES ('" + itemName + "', '" + storeName + "', '" + orderId + "', " + unitPrice + ", " + quantity + ", " + totalPrice + ", " + totalWeight + ", " + weight + "  )");
+        return rs_order == 1;
+    }
+
 
 
 }
