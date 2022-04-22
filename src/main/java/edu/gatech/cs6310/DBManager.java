@@ -6,10 +6,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 
 public class DBManager {
-    private String driver = "com.mysql.cj.jdbc.Driver";
-    private String connection = "jdbc:mysql://database:3306/delivery";
-    private String user = "admin";
-    private String password = "password";
     private static Logger logger = LogManager.getLogger(DBManager.class);
 
 
@@ -20,8 +16,8 @@ public class DBManager {
 
     public void mysqlConnect(){
         try{
-            Class.forName(driver);
-            con = DriverManager.getConnection(connection, user, password);
+            Class.forName(Settings.DB_DRIVER);
+            con = DriverManager.getConnection(Settings.DB_CONNECTION, Settings.DB_USER, Settings.DB_PASSWORD);
         }
         catch(ClassNotFoundException e){
             System.err.println("Couldn't load driver.");
@@ -68,7 +64,23 @@ public class DBManager {
 
         return -1;
     }
+    public int delete(String query){
+        this.mysqlConnect();
+        try{
+            state = con.createStatement();
+            return state.executeUpdate(query);
+        }
+        catch(SQLException e){
+            System.err.println("Query error: " + query);
+            logger.error("Query error: " + query);
+        }
+        catch(NullPointerException e){
+            System.err.println("Element not found." + e);
+            logger.error("Element not found." + e);
+        }
 
+        return -1;
+    }
 
     public void closeConnection(){
         try{

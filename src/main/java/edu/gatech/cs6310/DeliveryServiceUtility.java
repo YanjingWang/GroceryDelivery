@@ -15,6 +15,12 @@ public class DeliveryServiceUtility {
     private Set<String> licenses = new HashSet<>();
     private static Logger logger = LogManager.getLogger(DeliveryServiceUtility.class);
     private static Controller controller = new Controller();
+    private User user;
+
+
+    public DeliveryServiceUtility(User user) {
+        this.user = user;
+    }
 
     /**
      * Create a new store

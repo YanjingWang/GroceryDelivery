@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `account_id` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `phonenumber` varchar(50) NOT NULL,
@@ -31,7 +31,8 @@ INSERT INTO `user`(`account_id`,`password`,`firstname`,`lastname`,`phonenumber`)
 ('aapple2','123456','Alana','Apple','222-222-2222'),
 ('ccherry4','234567','carlos','cherry','444-444-4444'),
 ('ffig8','345678','Finneas','Fig','888-888-8888'),
-('ggrape17','456789','Gillian','Grape','999-999-9999');
+('ggrape17','456789','Gillian','Grape','999-999-9999'),
+('admin','cc5d3be50afc1bcd45ce317e58294f68d816168c7d3a2772935cb616f4cda0f63ec896b1c252cded95a6476902820d373f5341720b334ba5805e27f24a65b0c5','Adam','Ming','000-000-0000');
 DROP TABLE IF EXISTS `customer`;
 
 CREATE TABLE `customer` (
@@ -128,7 +129,7 @@ CREATE TABLE `pilot` (
   `license_id` varchar(50) NOT NULL COMMENT 'unique licenseID',
   `experience` int(50) NOT NULL COMMENT 'completed trips',
   `store_name` varchar(50) DEFAULT NULL COMMENT 'assign a drone from store',
-  `drone` int(50) DEFAULT NULL COMMENT 'assign a drone from store',
+  `drone` varchar(50) DEFAULT NULL COMMENT 'assign a drone from store',
   PRIMARY KEY (`pilot_id`),
   KEY `tax_id` (`tax_id`,`license_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
