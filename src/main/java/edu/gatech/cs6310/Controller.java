@@ -1,6 +1,7 @@
 package edu.gatech.cs6310;
 
 
+import com.sun.source.tree.Tree;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,6 +33,7 @@ public class Controller {
         return user;
     }
 
+
     public Store findStoreByName(String name) {
         Store store = null;
         try (ResultSet rs = manager.get("select * from store where store_name='" + name + "'")) {
@@ -46,6 +48,7 @@ public class Controller {
         }
         return store;
     }
+
 
     public List<Store> findAllStore() {
         List<Store> stores = new ArrayList<>();
@@ -257,6 +260,40 @@ public class Controller {
         int rs_user = manager.insert("INSERT INTO delivery.user(`account_id`,`password`,`firstname`, `lastname`, `phonenumber`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "')");
         return rs_customer == 1;
     }
+
+
+    public boolean createNewDrone(String storeName, Drone drone){
+        //String droneID = drone.getId();
+        //Long totalCapacity;
+        //Long remainingCapacity;
+        //Integer tripsCompleted;
+        //Integer maximumDeliveries;
+        //Long weight = drone.getWeight();
+        int rs = manager.insert("INSERT INTO delivery.drone(drone_id, total_capacity, max_deliveries, trips_completed, remain_Capacity, pilot_id, store_name) VALUES ('" + drone.getId() + "', '" + drone.getTotalCapacity()
+                + "','" + drone.getMaximumDeliveries() + "','" + drone.getTripsCompleted() + "','" + drone.getRemainingCapacity() + "','" + drone.getPilot() + "','" + storeName + "')");
+        return rs == 1;
+    }
+
+
+    public TreeMap<String, Drone> findAllDrone(String storeName){
+        TreeMap<String, Drone> drones = new TreeMap<>();
+        try (ResultSet rs = manager.get("SELECT * FROM `drone` WHERE `store_name` = '"+ storeName +"'")) {
+            if (rs != null) {
+                while (rs.next()) {
+                    String droneID = rs.getString("drone_id");
+                    Long totalCapacity = rs.getLong("total_capacity");
+                    Integer maximumDeliveries = rs.getInt("max_deliveries");
+                    drones.put(droneID, new Drone(droneID, totalCapacity, maximumDeliveries));
+                }
+            }
+        } catch(SQLException e) {
+            System.out.println("Error find all drones. " + e);
+            logger.error("Error find all drones. " + e);
+        } finally {
+            manager.closeConnection();
+        }
+        return drones;
+    };
 
     public Drone findDroneByID(String storeName,String droneid){
         Drone drone = null;

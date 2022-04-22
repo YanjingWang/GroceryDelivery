@@ -12,6 +12,8 @@ public class Drone {
     private Pilot pilot;
     private static Controller controller = new Controller();
 
+
+
     Drone(String id, Long totalCapacity, Integer maximumDeliveries) {
         this.id = id;
         this.totalCapacity = totalCapacity;
@@ -60,6 +62,28 @@ public class Drone {
     public Integer tripsLeft() {
         return maximumDeliveries - tripsCompleted;
     }
+
+
+
+
+    public Long getTotalCapacity() {
+        return totalCapacity;
+    }
+    public Long getRemainingCapacity() {
+        return remainingCapacity;
+    }
+    public Integer getTripsCompleted() {
+        return tripsCompleted;
+    }
+    public Integer getMaximumDeliveries() {
+        return maximumDeliveries;
+    }
+    public Pilot getPilot() {
+        return pilot;
+    }
+
+
+
 
     @Override
     public String toString() {
