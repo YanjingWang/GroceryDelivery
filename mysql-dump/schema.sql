@@ -72,10 +72,7 @@ CREATE TABLE `drone` (
 insert  into `drone`(`number`,`drone_id`,`total_capacity`,`max_deliveries`,`trips_completed`,`remain_Capacity`,`pilot_id`,`store_name`) values 
 (1,'1',40,1,0,40,NULL,'kroger'),
 (2,'1',40,3,0,40,NULL,'publix'),
-(3,'2',20,3,0,20,NULL,'kroger'),
-(4,'2',30,4,0,30,NULL,'publix'),
-(5,'3',25,2,0,25,NULL,'kroger'),
-(6,'1',40,1,0,40,NULL,'costco');
+(3,'2',20,3,0,20,NULL,'kroger');
 
 /*Table structure for table `item` */
 
@@ -94,10 +91,7 @@ CREATE TABLE `item` (
 insert  into `item`(`number`,`item_name`,`unit_weight`,`store_name`) values 
 (1,'pot_roast',5,'kroger'),
 (2,'cheesecake',4,'kroger'),
-(3,'cheesecake',8,'publix'),
-(4,'apple',2,'publix'),
-(5,'apple',3,'costco'),
-(6,'cheese',1,'costco');
+(3,'cheesecake',8,'publix');
 
 /*Table structure for table `order` */
 
@@ -117,7 +111,8 @@ CREATE TABLE `order` (
 insert  into `order`(`no`,`store_name`,`order_id`,`drone_id`,`customer_id`) values 
 (1,'kroger','purchaseA','1','aapple2'),
 (2,'kroger','purchaseB','1','aapple2'),
-(3,'kroger','purchaseD','2','ccherry4');
+(3,'kroger','purchaseD','2','ccherry4'),
+(4,'publix','purchaseA','1','ccherry4');
 
 /*Table structure for table `pilot` */
 
@@ -162,8 +157,8 @@ CREATE TABLE `requested_item` (
 insert  into `requested_item`(`no`,`item_name`,`store_name`,`order_id`,`unit_price`,`quantity`,`totalprice`,`totalweight`,`weight`) values 
 (1,'pot_roast','kroger','purchaseA',3,9,27,15,10),
 (2,'pot_roast','kroger','purchaseB',4,4,16,20,5),
-(3,'cheesecake','publix','purchaseA',3,9,27,15,10), -- not sure
-(4,'cheesecake','kroger','purchaseD',1,2,2,4,10); -- not sure
+(3,'cheesecake','publix','purchaseA',10,3,30,24,8), -- not sure
+(4,'cheesecake','kroger','purchaseD',10,1,10,4,4); -- not sure
 
 /*Table structure for table `store` */
 
@@ -177,8 +172,7 @@ CREATE TABLE `store` (
 
 /*Data for the table `store` */
 
-insert  into `store`(`store_name`,`revenue`) values 
-('costco',31000),
+insert  into `store`(`store_name`,`revenue`) values
 ('kroger',33000),
 ('publix',33000);
 
