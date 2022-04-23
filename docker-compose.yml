@@ -23,6 +23,7 @@ services:
       - database
     volumes:
       - ./target/drone_delivery-0.0.1.jar:/drone_delivery-0.0.1.jar
+      - ./logs:/logs
     restart: always
 
 volumes:
