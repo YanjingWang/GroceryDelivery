@@ -5,6 +5,9 @@ import com.sun.source.tree.Tree;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -22,8 +25,9 @@ public class Controller {
                 String lastname = rs.getString("lastname");
                 String phonenumber = rs.getString("phonenumber");
                 String hashPassword = rs.getString("password");
+                User.Role role = User.Role.getByValue(rs.getInt("role"));
                 if (hashPassword.equals(inputPassword)) {
-                    user = new User(firstname, lastname, phonenumber);
+                    user = new User(firstname, lastname, phonenumber, role);
                 }
             }
         } catch(SQLException e) {
@@ -265,17 +269,27 @@ public class Controller {
         return customers;
     }
 
-    public boolean createNewCustomer(Customer customer) {
+    public boolean createNewCustomer(Customer customer, String newPassword) {
         String accountId = customer.getAccountId();
         String firstName = customer.getUser().getFirstName();
         String lastName = customer.getUser().getLastName();
         String phoneNo = customer.getUser().getPhoneNumber();
         Integer rating = customer.getRating();
         Long credits = customer.getCredits();
-        String password = "123";
+        String password = hashPassword(newPassword);
         int rs_customer = manager.insert("INSERT INTO delivery.customer (`customer_id`,`rating`,`credit`) VALUES ('" + accountId + "', " + rating + ", " + credits + ")");
         int rs_user = manager.insert("INSERT INTO delivery.user(`account_id`,`password`,`firstname`, `lastname`, `phonenumber`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "')");
-        return rs_customer == 1;
+        return rs_customer == 1 && rs_user == 1;
+    }
+
+    public boolean createNewUser(User user, String accountId, String newPassword) {
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+        String phoneNo = user.getPhoneNumber();
+        String password = hashPassword(newPassword);
+        int role = user.getRole().getValue();
+        int rs_user = manager.insert("INSERT INTO delivery.user(`account_id`,`password`,`firstname`, `lastname`, `phonenumber`, `role`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "'" + "," + role + ")");
+        return rs_user == 1;
     }
 
     public boolean createNewDrone(String storeName, Drone drone){
@@ -471,6 +485,38 @@ public class Controller {
         return rs_order == 1;
     }
 
+    public User findUserById(String username) {
+        User user = null;
+        try (ResultSet rs = manager.get("select * from user where account_id='" + username + "'")) {
+            if (rs != null) {
+                rs.next();
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String phonenumber = rs.getString("phonenumber");
+                User.Role role = User.Role.valueOf(rs.getString("role"));
+                user = new User(firstname, lastname, phonenumber, role);
+            }
+        } catch(SQLException e) {
+            logger.error("Error find user by name: " + username + e);
+        }
 
+        return user;
+    }
 
+    public static String hashPassword(String passwordToHash) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(Settings.PASSWORD_SALT.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for (byte aByte : bytes) {
+                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
 }

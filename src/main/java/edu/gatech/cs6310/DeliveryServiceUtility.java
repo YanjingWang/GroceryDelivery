@@ -231,7 +231,7 @@ public class DeliveryServiceUtility {
      * @param rating
      * @param credits
      */
-    public void makeCustomer(String customerId, String firstName, String lastName, String phoneNo, String rating, String credits) {
+    public void makeCustomer(String customerId, String firstName, String lastName, String phoneNo, String rating, String credits, String newPassword) {
         Customer customer = controller.findCustomerByID(customerId);
         if(customer != null) {
             System.out.println("ERROR: customer_identifier_already_exists");
@@ -239,10 +239,23 @@ public class DeliveryServiceUtility {
             return;
         }
         controller.createNewCustomer(new Customer(
-                                     customerId,
-                                     new User(firstName, lastName, phoneNo),
-                                     Integer.valueOf(rating), Long.valueOf(credits))
-                                    );
+                        customerId,
+                        new User(firstName, lastName, phoneNo),
+                        Integer.valueOf(rating), Long.valueOf(credits)),
+                        newPassword
+        );
+        printSuccessfulChange();
+    }
+
+
+    public void makeUser(String userId, String firstName, String lastName, String phoneNo, String role_type, String password) {
+        User user = controller.findUserById(userId);
+        if(user != null) {
+            System.out.println("ERROR: user_identifier_already_exists");
+            logger.error("ERROR: user_identifier_already_exists");
+            return;
+        }
+        controller.createNewUser(new User(firstName, lastName, phoneNo, Enum.valueOf(User.Role.class, role_type.toUpperCase())), userId, password);
         printSuccessfulChange();
     }
 
