@@ -48,7 +48,7 @@ public class DeliveryService {
                 }else if (tokens[0].equals("fly_drone")) {
                     deliveryServiceUtility.flyDrone(tokens[1],tokens[2],tokens[3]);
                 }else if (tokens[0].equals("make_customer")) {
-                    deliveryServiceUtility.makeCustomer(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6]);
+                    deliveryServiceUtility.makeCustomer(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6],tokens[7]);
                 }else if (tokens[0].equals("display_customers")) {
                     deliveryServiceUtility.displayCustomers();
                 }else if (tokens[0].equals("start_order")) {
@@ -59,8 +59,10 @@ public class DeliveryService {
                     deliveryServiceUtility.requestItem(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5]);
                 }else if (tokens[0].equals("purchase_order")) {
                     deliveryServiceUtility.purchaseOrder(tokens[1],tokens[2]);
-                }else if(tokens[0].equals("cancel_order")) {
+                }else if(tokens[0].equals("cancel_order")) {   //working
                     deliveryServiceUtility.cancelOrder(tokens[1],tokens[2]);
+                }else if(tokens[0].equals("make_user")) {
+                    deliveryServiceUtility.makeUser(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6]);
                 }else if (wholeInputLine.equals("stop")) {
                     System.out.println("stop acknowledged");
                     break;

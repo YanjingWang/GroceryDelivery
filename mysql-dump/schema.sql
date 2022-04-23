@@ -25,14 +25,16 @@ CREATE TABLE `user` (
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `phonenumber` varchar(50) NOT NULL,
+  `role` int default 2,
   PRIMARY KEY (`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `user`(`account_id`,`password`,`firstname`,`lastname`,`phonenumber`) VALUES
-('aapple2','123456','Alana','Apple','222-222-2222'),
-('ccherry4','234567','carlos','cherry','444-444-4444'),
-('ffig8','345678','Finneas','Fig','888-888-8888'),
-('ggrape17','456789','Gillian','Grape','999-999-9999'),
-('admin','cc5d3be50afc1bcd45ce317e58294f68d816168c7d3a2772935cb616f4cda0f63ec896b1c252cded95a6476902820d373f5341720b334ba5805e27f24a65b0c5','Adam','Ming','000-000-0000');
+INSERT INTO `user`(`account_id`,`password`,`firstname`,`lastname`,`phonenumber`,`role`) VALUES
+('aapple2','cc5d3be50afc1bcd45ce317e58294f68d816168c7d3a2772935cb616f4cda0f63ec896b1c252cded95a6476902820d373f5341720b334ba5805e27f24a65b0c5','Alana','Apple','222-222-2222',2),
+('ccherry4','cc5d3be50afc1bcd45ce317e58294f68d816168c7d3a2772935cb616f4cda0f63ec896b1c252cded95a6476902820d373f5341720b334ba5805e27f24a65b0c5','carlos','cherry','444-444-4444',2),
+('ffig8','cc5d3be50afc1bcd45ce317e58294f68d816168c7d3a2772935cb616f4cda0f63ec896b1c252cded95a6476902820d373f5341720b334ba5805e27f24a65b0c5','Finneas','Fig','888-888-8888',2),
+('ggrape17','cc5d3be50afc1bcd45ce317e58294f68d816168c7d3a2772935cb616f4cda0f63ec896b1c252cded95a6476902820d373f5341720b334ba5805e27f24a65b0c5','Gillian','Grape','999-999-9999',2),
+('admin','cc5d3be50afc1bcd45ce317e58294f68d816168c7d3a2772935cb616f4cda0f63ec896b1c252cded95a6476902820d373f5341720b334ba5805e27f24a65b0c5','Adam','Ming','000-000-0000',0),
+('manager','cc5d3be50afc1bcd45ce317e58294f68d816168c7d3a2772935cb616f4cda0f63ec896b1c252cded95a6476902820d373f5341720b334ba5805e27f24a65b0c5','Michael','Ging','111-111-1111',1);
 DROP TABLE IF EXISTS `customer`;
 
 CREATE TABLE `customer` (
