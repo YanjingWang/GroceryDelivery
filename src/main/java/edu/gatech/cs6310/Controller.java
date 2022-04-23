@@ -52,6 +52,10 @@ public class Controller {
         return store;
     }
 
+    public void storeAddRevenue(Store store, Long revenue ){
+        int rs = manager.update( "UPDATE `store` SET `revenue` = `revenue` +" + revenue + " WHERE `store_name` = '" +store.getName()+ "'");
+    }
+
     public List<Store> findAllStore() {
         List<Store> stores = new ArrayList<>();
         try (ResultSet rs = manager.get("select * from store where 1=1")) {
@@ -142,21 +146,35 @@ public class Controller {
                 String store_name = rs.getString("store_name");
                 String droneid = rs.getString("drone");
                 if(droneid != null & pilot.getAssignedDrone()==null){
-                    Drone drone = null;
-                    try (ResultSet rs_2 = manager.get("SELECT * FROM `drone` WHERE `store_name` = '"+ store_name +"' AND `drone_id` = '" + droneid+ "'")) {
-                        if (rs_2 != null) {
-                            rs.next();
-                            String ID = rs_2.getString("drone_id");
-                            Long totalCapacity = rs_2.getLong("total_capacity");
-                            Integer maximumDeliveries = rs_2.getInt("max_deliveries");
-                            drone = new Drone(ID, totalCapacity, maximumDeliveries);
-                            // update drone current situiation?
-                        }
-                    } catch(SQLException e) {
-                        logger.error("Error find store by account: " + droneid + e);
-                    }
-                    pilot.assignDrone(drone);
+                    pilot.assignDrone(this.findDroneOnlyByID(store_name,droneid));
                 }
+            }
+        } catch(SQLException e) {
+            logger.error("Error find store by account: " + accountID + e);
+        }
+        return pilot;
+    }
+
+    public Pilot findPilotOnlyByID(String accountID) {
+        Pilot pilot = null;
+        User user =null;
+        try (ResultSet rs = manager.get("SELECT * " +
+                "FROM `pilot` AS s " +
+                "INNER JOIN `user` AS u " +
+                "ON s.pilot_id = u.account_id " +
+                "WHERE s.pilot_id ='" + accountID + "'")) {
+            if (rs != null) {
+                rs.next();
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                String phoneNo = rs.getString("phonenumber");
+                user = new User(firstName,lastName,phoneNo);
+
+                String accountId = rs.getString("pilot_id");
+                String taxId = rs.getString("tax_id");
+                String licenseId = rs.getString("license_id");
+                Integer experience = rs.getInt("experience");
+                pilot = new Pilot(accountId, user, taxId,licenseId,experience);
             }
         } catch(SQLException e) {
             logger.error("Error find store by account: " + accountID + e);
@@ -218,6 +236,11 @@ public class Controller {
         int rs_pilot = manager.insert("INSERT INTO delivery.pilot (`pilot_id`,`tax_id`,`license_id`, `experience`) VALUES ('" + accountId + "', '" + taxId + "', '" + licenseId + "', " + experience + ")");
         int rs_user = manager.insert("INSERT INTO delivery.user (`account_id`,`password`,`firstname`, `lastname`, `phonenumebr`) VALUES('" + accountId + "', '" + password + "', '" + firstName + "', '" + lastName + "','" + phoneNo + "',)");
         return rs_pilot == 1;
+    }
+
+    public void updatePilotExperience(Pilot pilot){
+        int rs = manager.update( "UPDATE `pilot` SET `experience` = `experience` +" + 1 + " WHERE `pilot_id` = '" +pilot.getAccountId()+ "'");
+
     }
 
     public Customer findCustomerByID(String accountID) {
@@ -292,6 +315,10 @@ public class Controller {
         return rs_user == 1;
     }
 
+    public void updateCustomerCredit(Customer customer,Long credit){
+        int rs = manager.update( "UPDATE `customer` SET `credit` = `credit` -" + credit + " WHERE `customer_id` = '" +customer.getAccountId()+ "'");
+    }
+
     public boolean createNewDrone(String storeName, Drone drone){
         //String droneID = drone.getId();
         //Long totalCapacity;
@@ -312,7 +339,13 @@ public class Controller {
                     String droneID = rs.getString("drone_id");
                     Long totalCapacity = rs.getLong("total_capacity");
                     Integer maximumDeliveries = rs.getInt("max_deliveries");
-                    drones.put(droneID, new Drone(droneID, totalCapacity, maximumDeliveries));
+                    String pilotID = rs.getString("pilot_id");
+                    Drone drone = new Drone(droneID, totalCapacity, maximumDeliveries);
+                    if (pilotID != null){
+                        Pilot pilot = this.findPilotByID(pilotID);
+                        drone.assignPilot(pilot);
+                    }
+                    drones.put(droneID, drone);
                 }
             }
         } catch(SQLException e) {
@@ -333,36 +366,13 @@ public class Controller {
                 Long totalCapacity = rs.getLong("total_capacity");
                 Integer maximumDeliveries = rs.getInt("max_deliveries");
                 drone = new Drone(ID, totalCapacity, maximumDeliveries);
-
+                drone.setStoreName(storeName);
 //              if this drone was assinged a pilot
                 Integer trips_completed = rs.getInt("trips_completed");
                 Long remain_capacity = rs.getLong("remain_Capacity");
                 String pilot_id = rs.getString("pilot_id");
-                if(pilot_id != null & drone.getPilot() == null){
-                    Pilot pilot = null;
-                    User user =null;
-                    try (ResultSet rs_2 = manager.get("SELECT * " +
-                            "FROM `pilot` AS s " +
-                            "INNER JOIN `user` AS u " +
-                            "ON s.pilot_id = u.account_id " +
-                            "WHERE s.pilot_id ='" + pilot_id + "'")) {
-                        if (rs_2 != null) {
-                            rs.next();
-                            String firstName = rs_2.getString("firstname");
-                            String lastName = rs_2.getString("lastname");
-                            String phoneNo = rs_2.getString("phonenumber");
-                            user = new User(firstName,lastName,phoneNo);
-
-                            String accountId = rs_2.getString("pilot_id");
-                            String taxId = rs_2.getString("tax_id");
-                            String licenseId = rs_2.getString("license_id");
-                            Integer experience = rs_2.getInt("experience");
-                            pilot = new Pilot(accountId, user, taxId,licenseId,experience);
-                        }
-                    } catch(SQLException e) {
-                        logger.error("Error find store by account: " + pilot_id + e);
-                    }
-                    drone.setPilot(pilot);
+                if(pilot_id != null & drone.getAssignedPilot() == null){
+                    drone.assignPilot(this.findPilotOnlyByID(pilot_id));
                 }
                 drone.setRemainingCapacity(remain_capacity);
                 drone.setTripsCompleted(trips_completed);
@@ -374,13 +384,40 @@ public class Controller {
         return drone;
     }
 
+    public Drone findDroneOnlyByID(String storeName,String droneid){
+        Drone drone = null;
+        try (ResultSet rs = manager.get("SELECT * FROM `drone` WHERE `store_name` = '"+ storeName +"' AND `drone_id` = '" + droneid+ "'")) {
+            if (rs != null) {
+                rs.next();
+                String ID = rs.getString("drone_id");
+                Long totalCapacity = rs.getLong("total_capacity");
+                Integer maximumDeliveries = rs.getInt("max_deliveries");
+                drone = new Drone(ID, totalCapacity, maximumDeliveries);
+                drone.setStoreName(storeName);
+            }
+        } catch(SQLException e) {
+            logger.error("Error find store by account: " + droneid + e);
+        }
+        return drone;
+    }
+
+    public void updateDroneLoad(String storeName, Drone drone, Long totalWeight){
+        int rs = manager.update( "UPDATE `drone` SET `remain_Capacity` = `remain_Capacity` -" + totalWeight + " WHERE `drone_id` = '" +drone.getId()+ "' AND `store_name` = '" + storeName +"'");
+    }
+
+    public void incrementDroneTrips(String storeName,Drone drone){
+        int rs = manager.update( "UPDATE `drone` SET `trips_completed` = `trips_completed` +" + 1 + " WHERE `drone_id` = '" +drone.getId()+ "' AND `store_name` = '" + storeName +"'");
+    }
+
     public boolean driveDrone(String storeName, Drone drone, Pilot pilot){
         Drone preDrone = pilot.getAssignedDrone();
         Pilot prePilot = drone.getPilot();
+//        System.out.println(preDrone);
         // clear previous record
         if (preDrone != null){
+//            System.out.println( preDrone.getStoreName());
             // update pilot's previous drone'pilot as NULL in database
-            int rs_preDrone = manager.update( "UPDATE `drone` SET `pilot_id` = NULL WHERE `store_name` = '" + storeName +"' AND `drone_id` = '" + preDrone.getId()+ "'");
+            int rs_preDrone = manager.update( "UPDATE `drone` SET `pilot_id` = NULL WHERE `store_name` = '" + preDrone.getStoreName() +"' AND `drone_id` = '" + preDrone.getId()+ "'");
             // update current pilot' drone as NULL in database
             int rs_pilot = manager.update( "UPDATE `pilot` SET `store_name` = NULL, `drone` = NULL WHERE `pilot_id` = '" +pilot.getAccountId()+ "'");
         }
@@ -452,7 +489,10 @@ public class Controller {
         String orderId = order.getOrderId();
         String droneId = order.getDroneId();
         String customerId = order.getCustomer();
+        // delete order
         int rs_order = manager.delete("DELETE FROM `order` WHERE `store_name` = '" +storeName+"' AND `order_id` = '" + orderId + "'");
+        // delete order related request items
+        int rs_requestItems = manager.delete("DELETE FROM `requested_item` WHERE `store_name` = '" +storeName+"' AND `order_id` = '" + orderId + "'");
         return rs_order == 1;
     }
 
@@ -482,6 +522,8 @@ public class Controller {
         Integer totalPrice = item.getTotalPrice();
         Long totalWeight = item.getTotalWeight();
         int rs_order = manager.insert("INSERT INTO delivery.requested_item (`item_name`, `store_name`, `order_id`,`unit_price`, `quantity`, `totalprice`, `totalweight`,`weight`) VALUES ('" + itemName + "', '" + storeName + "', '" + orderId + "', " + unitPrice + ", " + quantity + ", " + totalPrice + ", " + totalWeight + ", " + weight + "  )");
+        // update remain_capacity - requested item weight
+        int rs_drone = manager.update("UPDATE `drone` SET `remain_Capacity` = `remain_Capacity` -" + totalWeight +"  WHERE `store_name` = '" + storeName +"' AND `drone_id` = '" +order.getDroneId()+ "'");
         return rs_order == 1;
     }
 
