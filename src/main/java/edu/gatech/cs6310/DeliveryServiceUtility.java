@@ -184,7 +184,6 @@ public class DeliveryServiceUtility {
     }
 
 
-
     /**
      * Assign a drone to a pilot and vice-versa
      *
@@ -231,7 +230,7 @@ public class DeliveryServiceUtility {
      * @param rating
      * @param credits
      */
-    public void makeCustomer(String customerId, String firstName, String lastName, String phoneNo, String rating, String credits) {
+    public void makeCustomer(String customerId, String firstName, String lastName, String phoneNo, String rating, String credits, String newPassword) {
         Customer customer = controller.findCustomerByID(customerId);
         if(customer != null) {
             System.out.println("ERROR: customer_identifier_already_exists");
@@ -239,10 +238,23 @@ public class DeliveryServiceUtility {
             return;
         }
         controller.createNewCustomer(new Customer(
-                                     customerId,
-                                     new User(firstName, lastName, phoneNo),
-                                     Integer.valueOf(rating), Long.valueOf(credits))
-                                    );
+                        customerId,
+                        new User(firstName, lastName, phoneNo),
+                        Integer.valueOf(rating), Long.valueOf(credits)),
+                        newPassword
+        );
+        printSuccessfulChange();
+    }
+
+
+    public void makeUser(String userId, String firstName, String lastName, String phoneNo, String role_type, String password) {
+        User user = controller.findUserById(userId);
+        if(user != null) {
+            System.out.println("ERROR: user_identifier_already_exists");
+            logger.error("ERROR: user_identifier_already_exists");
+            return;
+        }
+        controller.createNewUser(new User(firstName, lastName, phoneNo, Enum.valueOf(User.Role.class, role_type.toUpperCase())), userId, password);
         printSuccessfulChange();
     }
 
@@ -377,7 +389,6 @@ public class DeliveryServiceUtility {
 
 //        Drone drone = store.getDrones().get(order.getDroneId());
         Drone drone = controller.findDroneByID(storeName,order.getDroneId());
-        System.out.println(drone.getTotalCapacity() + drone.getRemainingCapacity());
         if(!drone.canCarry(totalWeightCurrentlyInOrder + requestedItem.getTotalWeight())) {
             System.out.println("ERROR: drone_cant_carry_new_item");
             logger.error("ERROR: drone_cant_carry_new_item");
@@ -401,44 +412,52 @@ public class DeliveryServiceUtility {
      * @param orderId
      */
     public void purchaseOrder(String storeName, String orderId) {
-        Store store = stores.get(storeName);
+//        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
 
-        Order order = store.getOrders().get(orderId);
+//        Order order = store.getOrders().get(orderId);
+        Order order = controller.findOrderByID(storeName,orderId);
         if(order == null) {
             System.out.println("ERROR: order_identifier_does_not_exist");
             logger.error("ERROR: order_identifier_does_not_exist");
             return;
         }
 
-        Drone drone = store.getDrones().get(order.getDroneId());
-        Pilot pilot = drone.getAssignedPilot();
-
-        Customer customer = customers.get(order.getCustomer());
-
-        order.getItems().forEach( requestedItem -> {
-            customer.updateUsedCredits(Long.valueOf(requestedItem.getTotalPrice()));
-            store.addRevenue(Long.valueOf(requestedItem.getTotalPrice()));
-            drone.addPayload(requestedItem.getTotalWeight());
+//        Drone drone = store.getDrones().get(order.getDroneId());
+        Drone drone = controller.findDroneByID(storeName,order.getDroneId());
+//        Pilot pilot = drone.getAssignedPilot();
+//        Customer customer = customers.get(order.getCustomer());
+        Customer customer = controller.findCustomerByID(order.getCustomer());
+        controller.findOrderItem(order).getItems().forEach( requestedItem -> {
+//            customer.updateUsedCredits(Long.valueOf(requestedItem.getTotalPrice()));
+            controller.updateCustomerCredit(customer,Long.valueOf(requestedItem.getTotalPrice()));
+//            store.addRevenue(Long.valueOf(requestedItem.getTotalPrice()));
+            controller.storeAddRevenue(store, Long.valueOf(requestedItem.getTotalPrice()));
+//            drone.addPayload(requestedItem.getTotalWeight());
+            controller.updateDroneLoad(storeName,drone, requestedItem.getTotalWeight());
         });
 
-        if (pilot == null) {
+        if (drone.getAssignedPilot() == null) {
             System.out.println("ERROR:drone_needs_pilot");
             logger.error("ERROR:drone_needs_pilot");
             return;
         }
+        Pilot pilot = controller.findPilotByID(drone.getAssignedPilot().getAccountId());
         if(drone.tripsLeft() <= 0) {
             System.out.println("ERROR:drone_needs_fuel");
             logger.error("ERROR:drone_needs_fuel");
             return;
         }
 
-        pilot.incrementExperience();
-        drone.incrementTripsCompleted();
+//        pilot.incrementExperience();
+        controller.updatePilotExperience(pilot);
+//        drone.incrementTripsCompleted();
+        controller.incrementDroneTrips(storeName,drone);
         store.removeOrder(order);
         printSuccessfulChange();
     }
@@ -450,20 +469,23 @@ public class DeliveryServiceUtility {
      * @param orderId
      */
     public void cancelOrder(String storeName, String orderId) {
-        Store store = stores.get(storeName);
+//        Store store = stores.get(storeName);
+        Store store = controller.findStoreByName(storeName);
         if(store == null) {
             System.out.println("ERROR: store_identifier_does_not_exist");
             logger.error("ERROR: store_identifier_does_not_exist");
             return;
         }
 
-        Order order = store.getOrders().get(orderId);
+//        Order order = store.getOrders().get(orderId);
+        Order order = controller.findOrderByID(storeName,orderId);
         if(order == null) {
             System.out.println("ERROR: order_identifier_does_not_exist");
             logger.error("ERROR: order_identifier_does_not_exist");
             return;
         }
-        store.removeOrder(order);
+//        store.removeOrder(order);
+        controller.deleteOrder(storeName,order);
         printSuccessfulChange();
     }
 

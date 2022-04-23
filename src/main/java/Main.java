@@ -11,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static edu.gatech.cs6310.Controller.hashPassword;
+
 
 public class Main {
 
@@ -28,8 +30,8 @@ public class Main {
         while (retry < Settings.AUTH_ATTEMPT_LIMIT && user == null) {
             user = login();
             if (user != null) {
-                System.out.println("Login successfully as: " + user.getName());
-                logger.info("Login successfully as: " + user.getName());
+                System.out.println("Login successfully as: " + user.getName() + " Role:" + user.getRole());
+                logger.info("Login successfully as: " + user.getName() + " Role:" + user.getRole());
             } else {
                 retry++;
                 System.out.println("Login in failed! Try again. You have " + (Settings.AUTH_ATTEMPT_LIMIT - retry) + " time(s) left.");
@@ -61,20 +63,5 @@ public class Main {
 
     }
 
-    public static String hashPassword(String passwordToHash) {
-        String generatedPassword = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(Settings.PASSWORD_SALT.getBytes(StandardCharsets.UTF_8));
-            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder();
-            for (byte aByte : bytes) {
-                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return generatedPassword;
-    }
+
 }

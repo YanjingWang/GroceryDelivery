@@ -1,6 +1,6 @@
 A5 Repo for CS6310 Fall 2021
 # Build Project With Maven:
-Build jar file with Maven, Please install Maven `3.8.5` ([How To Install Maven](https://phoenixnap.com/kb/install-maven-on-ubuntu))  then run command:
+Build jar file with Maven, Please install Maven `3.8.5` ([How To Install Maven](https://phoenixnap.com/kb/install-maven-on-ubuntu))  then run command under the project root folder:
 ```
 mvn package
 ```
