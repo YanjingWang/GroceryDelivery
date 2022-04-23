@@ -30,39 +30,115 @@ public class DeliveryService {
                 System.out.println("> " + wholeInputLine);
                 logger.info("> " + wholeInputLine);
                 if (tokens[0].equals("make_store")) {
-                    deliveryServiceUtility.makeStore(tokens[1], tokens[2]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.makeStore(tokens[1], tokens[2]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                } else if (tokens[0].equals("display_stores")) {
-                    deliveryServiceUtility.displayStores();
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.displayStores();
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("sell_item")) {
-                    deliveryServiceUtility.sellItem(tokens[1], tokens[2], tokens[3]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.sellItem(tokens[1], tokens[2], tokens[3]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("display_items")) {
                     deliveryServiceUtility.displayItems(tokens[1]);
                 }else if (tokens[0].equals("make_pilot")) {
-                    deliveryServiceUtility.makePilot(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6],tokens[7]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.makePilot(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6],tokens[7]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("display_pilots")) {
-                    deliveryServiceUtility.displayPilots();
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.displayPilots();
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("make_drone")) {
-                    deliveryServiceUtility.makeDrone(tokens[1],tokens[2],tokens[3],tokens[4]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.makeDrone(tokens[1],tokens[2],tokens[3],tokens[4]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("display_drones")) {
-                    deliveryServiceUtility.displayDrones(tokens[1]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.displayDrones(tokens[1]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("fly_drone")) {
-                    deliveryServiceUtility.flyDrone(tokens[1],tokens[2],tokens[3]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.flyDrone(tokens[1],tokens[2],tokens[3]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
+
                 }else if (tokens[0].equals("make_customer")) {
-                    deliveryServiceUtility.makeCustomer(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6],tokens[7]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.makeCustomer(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6],tokens[7]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("display_customers")) {
-                    deliveryServiceUtility.displayCustomers();
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.displayCustomers();
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("start_order")) {
-                    deliveryServiceUtility.startOrder(tokens[1],tokens[2],tokens[3],tokens[4]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.CUSTOMER)) {
+                        deliveryServiceUtility.startOrder(tokens[1],tokens[2],tokens[3],tokens[4]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("display_orders")) {
-                    deliveryServiceUtility.displayOrders(tokens[1]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.MANAGER)) {
+                        deliveryServiceUtility.displayOrders(tokens[1]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("request_item")) {
-                    deliveryServiceUtility.requestItem(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5]);
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.CUSTOMER)) {
+                        deliveryServiceUtility.requestItem(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (tokens[0].equals("purchase_order")) {
-                    deliveryServiceUtility.purchaseOrder(tokens[1],tokens[2]);
-                }else if(tokens[0].equals("cancel_order")) {   //working
+                    if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.CUSTOMER)) {
+                        deliveryServiceUtility.purchaseOrder(tokens[1],tokens[2]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
+                }else if(tokens[0].equals("cancel_order")) {
                     deliveryServiceUtility.cancelOrder(tokens[1],tokens[2]);
                 }else if(tokens[0].equals("make_user")) {
-                    deliveryServiceUtility.makeUser(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6]);
+                    if (user.getRole().equals(User.Role.ADMIN)) {
+                        deliveryServiceUtility.makeUser(tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6]);
+                    } else {
+                        System.out.println("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                        logger.info("User " + user.getName() + " Role: " + user.getRole() + " has no privilege to run command " + tokens[0]);
+                    }
                 }else if (wholeInputLine.equals("stop")) {
                     System.out.println("stop acknowledged");
                     break;
