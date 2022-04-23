@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="OFF">
-    <!-- 输出端 -->
+    <!-- output -->
     <appenders>
-        <!-- 控制台输出 -->
+        <!-- Console Output -->
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <!-- 文件输出： filename是写入的文件，filePattern表示当写入的文件大小达到设定的大小时旧文件存储的文件名及路径 -->
+        <!-- File output: filename is the file to be written, filePattern indicates the filename and path of the old file when the size of the written file reaches the set size -->
         <RollingRandomAccessFile name="DevLog"
                                  fileName="./logs/info.log" filePattern="D:/logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log.gz">
-            <!-- 日志输出格式 -->
+            <!-- log output format -->
             <PatternLayout charset="UTF-8" Pattern="%d %p %c [%t] %m%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
@@ -18,7 +18,7 @@
         </RollingRandomAccessFile>
     </appenders>
     <loggers>
-        <!-- 日志输出的级别即输出debug及以上级别的日志 -->
+        <!-- The level of log output is to output logs of debug and above levels -->
         <root level="debug">
             <appender-ref ref="DevLog"/>
         </root>
