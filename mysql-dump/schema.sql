@@ -155,8 +155,8 @@ CREATE TABLE `requested_item` (
 /*Data for the table `requested_item` */
 
 insert  into `requested_item`(`no`,`item_name`,`store_name`,`order_id`,`unit_price`,`quantity`,`totalprice`,`totalweight`,`weight`) values 
-(1,'pot_roast','kroger','purchaseA',3,9,27,15,10),
-(2,'pot_roast','kroger','purchaseB',4,4,16,20,5),
+(1,'pot_roast','kroger','purchaseA',10,3,30,15,5),
+(2,'pot_roast','kroger','purchaseB',5,4,20,20,5),
 (3,'cheesecake','publix','purchaseA',10,3,30,24,8), -- not sure
 (4,'cheesecake','kroger','purchaseD',10,1,10,4,4); -- not sure
 

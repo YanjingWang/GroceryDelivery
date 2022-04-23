@@ -7,6 +7,7 @@ public class Drone {
     private Long remainingCapacity;
     private Integer tripsCompleted;
     private Integer maximumDeliveries;
+    private String storeName = null;
 
     // Refers to the accountId of the pilot that is currently controlling the drone
     private Pilot pilot = null;
@@ -18,6 +19,14 @@ public class Drone {
         this.remainingCapacity = totalCapacity;
         this.tripsCompleted = 0;
         this.maximumDeliveries = maximumDeliveries;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
     public void setRemainingCapacity(Long remainingCapacity) {
